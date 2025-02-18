@@ -4,7 +4,7 @@
     /* Darker blue */
     --secondary: #e05263;
     --background: #0a0a0a;
-    --surface: rgba(255, 255, 255, 0.07);
+    --surface: rgba(255, 255, 255, 0.03);
     --text: #e6e6e6;
     /* --text: #D8F3DC; */
     --text-muted: #a6a6a6;
@@ -157,7 +157,8 @@ main {
     margin: 20px auto;
     padding: 20px;
     border-radius: 12px;
-    background: var(--surface);
+    /* background: var(--surface); */
+    background: rgba(10, 10, 10, 0.85);
     backdrop-filter: blur(10px);
     font-size: 1.2rem;
     line-height: 1.6;
@@ -166,7 +167,7 @@ main {
 }
 
 .mission-text {
-    color: var(--text);
+    color: var(--secondary);
     font-family: 'Inter', sans-serif;
 }
 
@@ -174,7 +175,8 @@ main {
     display: inline-block;
     margin-top: 20px;
     padding: 12px 24px;
-    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    /* background: linear-gradient(45deg, var(--secondary), var(--primary)); */
+    background: var(--primary);
     color: white;
     text-decoration: none;
     font-size: 1.1rem;
@@ -185,6 +187,90 @@ main {
     transform: scale(1.05);
 }
 
+/* README Section Styles */
+.readme-container {
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.readme-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.readme-container code {
+    font-family: 'Roboto Mono', monospace;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.readme-container pre {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.readme-container pre code {
+    background: none;
+    padding: 0;
+}
+
+.readme-container h1,
+.readme-container h2,
+.readme-container h3 {
+    color: var(--primary);
+    margin-top: 1.5em;
+}
+
+.readme-container p {
+    line-height: 1.6;
+    margin: 1em 0;
+}
+
+.readme-container ul,
+.readme-container ol {
+    padding-left: 1.5em;
+    margin: 1em 0;
+}
+
+.readme-container li {
+    margin: 0.5em 0;
+}
+
+.readme-container a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.readme-container a:hover {
+    opacity: 0.8;
+}
+
+.readme-loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+}
+
+/* Add animation for the loading state */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.readme-loading {
+    animation: pulse 1.5s infinite ease-in-out;
+}
 
 /* Section styling and animations */
 .section {
@@ -707,7 +793,7 @@ main {
 .contact-links a {
     padding: 0.5rem 1.5rem;
     text-decoration: none;
-    color: var(--text);
+    color: var(--primary);
     transition: transform 0.3s ease;
 }
 

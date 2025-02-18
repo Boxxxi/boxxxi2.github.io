@@ -15,6 +15,10 @@
 
     
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="js/readme.js" defer></script>
     <script src="js/script.js" defer></script>
     <script src="js/animations.js" defer></script>
     <script src="js/theme-toggle.js" defer></script>
@@ -22,7 +26,7 @@
 <body>
     <nav class="glass">
         <div class="nav-content">
-            <div class="logo">boXXXi<span class="blink">_</span></div>
+            <div class="logo">BOxxxI<span class="blink">_</span></div>
             <div class="nav-links">
                 <a href="#home" class="active">Home</a>
                 <a href="#about">About</a>
@@ -50,6 +54,14 @@
                 </div>
             </div>
         </section>
+
+        <!-- <section id="readme" class="section">
+            <div class="glass-card">
+                <h2>From My GitHub</h2>
+                <div id="readme-content" class="readme-container glass">
+                </div>
+            </div>
+        </section> -->
 
         <section id="about" class="section animate-on-scroll">
             <div class="glass-card">
@@ -263,14 +275,14 @@
                 <div class="projects-grid">
                     <div class="project-card glass">
                         <div class="project-image">
-                            <img src="https://picsum.photos/400/200" alt="Project Preview" loading="lazy"/>
+                            <img src="assets/images/DALLE_auto_regexify.webp" alt="Project Preview" loading="lazy"/>
                         </div>
-                        <h3>Auto-RegEx AI</h3>
-                        <p>NLP-based system that generates regex from text examples.</p>
+                        <h3>Auto-RegexIfy</h3>
+                        <p>Regex-based system that generates generalized entity capturing regex from text batches supplemented by Gen AI.</p>
                         <div class="tech-stack">
                             <span class="tech-badge">Python</span>
+                            <span class="tech-badge">Regex</span>
                             <span class="tech-badge">LLMs</span>
-                            <span class="tech-badge">FastAPI</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/YOUR_GITHUB" class="github-button glass">
@@ -284,20 +296,22 @@
         
                     <div class="project-card glass">
                         <div class="project-image">
-                            <img src="https://picsum.photos/400/200" alt="Project Preview" loading="lazy"/>
+                            <img src="assets/images/DALLE_merchant_categorization.webp" alt="Project Preview" loading="lazy"/>
                         </div>
-                        <h3>ML Model Monitor</h3>
-                        <p>Real-time monitoring system for ML model performance and drift detection.</p>
+                        <h3>Unsupervised Merchant Categorization</h3>
+                        <p>Merchant Categorization using NLP and Clustering Techniques</p>
                         <div class="tech-stack">
                             <span class="tech-badge">Python</span>
-                            <span class="tech-badge">AWS</span>
-                            <span class="tech-badge">Docker</span>
+                            <span class="tech-badge">Regex</span>
+                            <span class="tech-badge">FastText</span>
+                            <span class="tech-badge">HDBSCAN</span>
+                            <span class="tech-badge">WordCloud</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/YOUR_GITHUB" class="github-button glass">
+                            <a href="https://github.com/Boxxxi/merchant-categorization" class="github-button glass">
                                 <i class="fab fa-github"></i> View on GitHub
                             </a>
-                            <a href="#" class="article-button glass">
+                            <a href="https://github.com/Boxxxi/merchant-categorization/blob/main/article.md" class="article-button glass">
                                 <i class="fas fa-book"></i> Read Article
                             </a>
                         </div>
@@ -305,13 +319,40 @@
         
                     <div class="project-card glass">
                         <div class="project-image">
-                            <img src="https://picsum.photos/400/200" alt="Project Preview" loading="lazy"/>
+                            <img src="assets/images/DALLE_lstm_classification.webp" alt="Project Preview" loading="lazy"/>
                         </div>
-                        <h3>Credit Risk Engine</h3>
-                        <p>Alternative data-based credit scoring system using ensemble methods.</p>
+                        <h3>Multi-Category SMS Classification</h3>
+                        <p>Multi-class SMS classification over heirarchically dependent categories</p>
                         <div class="tech-stack">
                             <span class="tech-badge">Python</span>
-                            <span class="tech-badge">ML</span>
+                            <span class="tech-badge">GloVe</span>
+                            <span class="tech-badge">LSTM</span>
+                            <span class="tech-badge">Re-Inforcement Learning</span>
+                            <span class="tech-badge">AWS</span>
+                            <span class="tech-badge">FastApi</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/YOUR_GITHUB" class="github-button glass">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                            <a href="#" class="article-button glass disabled">
+                                <i class="fas fa-book"></i> Coming Soon
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card glass">
+                        <div class="project-image">
+                            <img src="assets/images/DALLE_credit_scoring.webp" alt="Project Preview" loading="lazy"/>
+                        </div>
+                        <h3>Credit-Risk Scoring</h3>
+                        <p>Generation of Credit-Risk scores using Payment Default data</p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">XGBoost</span>
+                            <span class="tech-badge">Categorical Data Analysis</span>
+                            <span class="tech-badge">Ensembling techniques</span>
+                            <span class="tech-badge">ML-ops</span>
                             <span class="tech-badge">AWS</span>
                         </div>
                         <div class="project-links">
