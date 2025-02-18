@@ -11,10 +11,12 @@
 
     
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/glassmorphism.css">
+
     
     <!-- Scripts -->
+    <script src="js/script.js" defer></script>
     <script src="js/animations.js" defer></script>
     <script src="js/theme-toggle.js" defer></script>
 </head>
@@ -39,6 +41,14 @@
             <div class="glass-card">
                 <h1 class="glow">HI, I'M ABHISHEK</h1>
                 <p class="typewriter">Senior Data Scientist | Deep Learning Enthusiast</p>
+
+                <div class="mission-container glass">
+                    <p class="mission-text">💡 I believe <strong>AI should simplify life, not complicate it</strong>.  
+                    My mission? To <strong>revolutionize AI-driven decision-making</strong> and build solutions  
+                    that let people focus on <em>creativity, innovation, and meaningful work</em>.</p>
+
+                    <a href="#projects" class="cta-button">View My Work</a>
+                </div>
             </div>
         </section>
 
@@ -46,12 +56,15 @@
             <div class="glass-card">
                 <h2>About Me</h2>
                 <p class="about-description">
-                    Experienced Senior Data Scientist with a strong background in machine learning, deep learning, and automated data extraction
-                    processes. Proven track record in developing scalable AI-driven solutions, optimizing workflows, and leading cross-functional
-                    collaborations. Expertise in credit scoring models, NLP-based data extraction, and model deployment.
+                    I’m a problem-solver at heart, blending statistics, AI, and automation to build intelligent systems that actually work. 
+                    With years of experience in data science, I’ve designed scalable AI solutions, streamlined workflows, and built cutting-edge 
+                    NLP and credit scoring models.
+
+                    From deep learning to large-scale data engineering, I enjoy making complex ideas accessible and efficient. My goal? 
+                    To revolutionize everyday life with AI-driven solutions.
                 </p>
                 <div class="skills-container">
-                    <h3>Technical Expertise</h3>
+                    <h3>Technical Stack</h3>
                     <div class="skills-grid">
                         <div class="skill-card glass">
                             <i class="fas fa-brain"></i>
@@ -108,24 +121,19 @@
                         <h4>FinBox.in</h4>
                         <ul>
                             <li>
-                                Architected a scalable reinforcement-based AI-driven automated data extraction solution, replacing the manual extraction
-                                pipeline. Worked closely with co-founders and cross-functional teams to streamline operations, significantly reducing
-                                manual workload while upskilling the Data Extraction team for higher-value responsibilities.
+                                Built an AI-driven automated data extraction system, replacing manual processes and reducing workload while 
+                                upskilling teams for strategic roles.
                             </li>
                             <li>
-                                Developed a robust pattern-driven regex automation pipeline enhanced with generative AI models, accelerating data
-                                extraction efficiency. Increased extraction accuracy from 71% to 93%, cutting manual effort by 70% and enhancing
-                                process scalability.
+                                Developed a regex automation pipeline enhanced with generative AI, boosting data extraction accuracy from 71% 
+                                to 93% and cutting manual effort by 70%.
                             </li>
                             <li>
-                                Designed highly accurate LSTM-based hierarchical multi-classification models trained on Glove embeddings, improving
-                                categorization accuracy by 34% over previous models. Built a periodic reinforcement pipeline to ensure continuous model
-                                performance improvements.
+                                Designed high-accuracy LSTM-based hierarchical classifiers, improving categorization accuracy by 34% with 
+                                reinforcement learning for continuous enhancements.
                             </li>
                             <li>
-                                Established standardized operating procedures (SOPs) and best practices, ensuring consistency and quality in data products.
-                                Created comprehensive documentation for frequently used processes, facilitating seamless knowledge transfer across
-                                teams.
+                                Established SOPs and best practices, ensuring consistent, scalable, and high-quality data solutions across teams.
                             </li>
                         </ul>
                     </div>
@@ -139,38 +147,26 @@
                         <h4>FinBox.in</h4>
                         <ul>
                             <li>
-                                Led the redevelopment of the DeviceConnect codebase (DeviceConnect V2) in collaboration with DS and Backend teams,
-                                enhancing predictor accuracy, configurability, and interpretability. Optimized system efficiency, reducing latency by 10%,
-                                cutting maintenance costs by 40%, and accelerating feature testing and deployment by upwards of 50%.
+                                Led the redevelopment of DeviceConnect V2, improving predictor accuracy, configurability, and interpretability, 
+                                while reducing maintenance costs by 40%.
                             </li>
                             </li>
                             <li>
-                                Developed and integrated approximately 1,500 new features from alternative data sources (BNPL, UPI, tax, investments,
-                                and spending patterns) to refine credit behavior analysis, improving model performance by 4%.
+                                Integrated 1,500+ alternative data features (BNPL, UPI, tax, investments, spending patterns) to refine credit 
+                                behavior analysis, improving model performance by 4%.
                             </li>
                             <li>
-                                Designed and deployed alternative credit scoring models using Machine Learning and Deep Learning, achieving a maximum
-                                AUC of 74%, one of them being the best-performing score across multiple lending portfolios for 2.5 years.
+                                Designed ML-based credit scoring models with an AUC of 74%, delivering the best-performing score across multiple 
+                                lending portfolios for 2.5 years.
                             </li>
                             <li>
-                                Proposed and developed an optimized API solution to mitigate memory issues and accelerate testing, execution, and
-                                monitoring, reducing deployment time for over 20 scoring models by 67%.
+                                Optimized scoring API for 20+ models, cutting deployment time by 67% and reducing data product latency by 30%.
                             </li>
                             <li>
-                                Identified inefficiencies in data products and implemented latency reduction techniques, improving accuracy and reducing
-                                product latency by 30%.
+                                Developed early warning risk scores for FinBox CollectX, increasing successful client collections from 5% to 15%.
                             </li>
                             <li>
-                                Developed a new collections recommendation logic and multiple early warning and post collection risk scores for FinBox
-                                CollectX, increasing the successful client collection rate from 5% to 15%.
-                            </li>
-                            <li>
-                                Leveraged automation tools such as Risk-Airflow and GitHub Actions to streamline workflows, enhance reliability, and
-                                improve maintainability, cutting product runtime by 30%.
-                            </li>
-                            <li>
-                                Collaborated on writing the featurization codebase for BOLT (FinBox’s finance tracker app), achieving an industry-leading
-                                response time of 1 second at the 90th percentile.
+                                Automated workflows with Risk-Airflow & GitHub Actions, reducing product runtime by 30%.
                             </li>
                         </ul>
                     </div>
@@ -184,12 +180,10 @@
                         <h4>J.P. Morgan Services Pvt Ltd, Mumbai</h4>
                         <ul>
                             <li>
-                                Conducted an in-depth analysis of specific trades responsible for outlier behavior in financial models and designed a metric
-                                to rank trades according to deviation, leading to a 2% reduction in risk across the portfolio.
+                                Analyzed trades responsible for outlier risks, designing a ranking metric that reduced portfolio risk by 2%.
                             </li>
                             <li>
-                                Validated, investigated and fixed discrepancies in the Ongoing Model Performance (OPM) report, to ensure the accuracy
-                                and robustness of the automated pipeline, increasing the accuracy of the report by 43%.
+                                Validated & fixed discrepancies in automated risk reports, improving accuracy by 43%.
                             </li>
                         </ul>
                     </div>
@@ -203,11 +197,11 @@
                         <h4>Indian Statistical Institute, Kolkata</h4>
                         <ul>
                             <li>
-                                Conducted comparative analysis of deep learning models vs traditional time series models across various datasets.
+                                Compared deep learning models vs. traditional time series models across multiple datasets.
                             </li>
                             <li>
-                                Modelled the success probability of trekking groups on the three primary routes of Mt. Rainier using a Zero-N inflated 
-                                Binomial model and logistic regression.
+                                Modelled the success probability of trekking groups on the three primary routes of Mt. Rainier 
+                                using a Zero-N inflated Binomial model and logistic regression.
                             </li>
                         </ul>
                     </div>
@@ -221,12 +215,11 @@
                         <h4>Octro.inc</h4>
                         <ul>
                             <li>
-                                Analyzed online card game data to create a probabilistic collusion detection algorithm, correctly identifying 83% of
-                                colluding pairs.
+                                Built a probabilistic collusion detection algorithm for online card games, correctly identifying 
+                                83% of colluding players.
                             </li>
                             <li>
-                                Implemented TrueSkill ranking to assess player skills in multiplayer games, to improve collusion detection between 
-                                players with different win-rates.
+                                Implemented TrueSkill ranking to detect match-fixing across different win-rate groups.
                             </li>
                         </ul>
                     </div>
@@ -240,13 +233,24 @@
                         <h4>Chegg.com, AssignmentExperts.com</h4>
                         <ul>
                             <li>
-                                Solved 500+ advanced statistical problems on Chegg’s forum.
+                                Solved 500+ advanced statistical problems and assisted in 100+ machine learning assignments globally.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- B. Stat. -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Aug 2016 - May 2019</div>
+                        <h3>Bachelor of Statistics</h3>
+                        <h4>Chegg.com, AssignmentExperts.com</h4>
+                        <ul>
+                            <li>
+                                Developed a beat detection algorithm for audio processing, achieving 82% accuracy.
                             </li>
                             <li>
-                                Helped with 100+ advanced mathematical, statistical and machine-learning college assignments.
-                            </li>
-                            <li>
-                                Assisted students globally in mastering concepts like regression, hypothesis testing, and Bayesian inference.
+                                Awarded merit scholarships for ranking 3rd and 4th (2017, 2018) in the Madhava Mathematics Competition.
                             </li>
                         </ul>
                     </div>

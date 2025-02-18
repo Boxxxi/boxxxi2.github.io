@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Handle navigation highlighting
+    // DOM Elements
     const navLinks = document.querySelectorAll('.nav-links a');
     const sections = document.querySelectorAll('section');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navContent = document.querySelector('.nav-links');
 
-    // Update active nav link based on scroll position
+    // Navigation highlighting based on scroll position
     function updateActiveNav() {
         let currentSection = '';
         
@@ -33,10 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Handle mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navContent = document.querySelector('.nav-links');
-
+    // Mobile menu toggle
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => {
             navContent.classList.toggle('show');
@@ -46,46 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav-content') && navContent.classList.contains('show')) {
+        if (!e.target.closest('.nav-content') && 
+            navContent.classList.contains('show')) {
             navContent.classList.remove('show');
             mobileMenuBtn.classList.remove('active');
         }
     });
 
-    // Add scroll event listener
-    window.addEventListener('scroll', () => {
-        updateActiveNav();
-    });
+    // Scroll event listener for navigation highlighting
+    window.addEventListener('scroll', updateActiveNav);
 
-    // Initialize active nav
+    // Initialize active nav on page load
     updateActiveNav();
-
-    // Add animation to skill cards
-    const skillCards = document.querySelectorAll('.skill-card');
-    skillCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 100 * index);
-    });
-
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, {
-        threshold: 0.2
-    });
-    
-    timelineItems.forEach((item, index) => {
-        item.style.transitionDelay = `${index * 0.2}s`;
-        observer.observe(item);
-    });
 });
