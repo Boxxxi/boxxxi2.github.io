@@ -45,6 +45,28 @@ A modern, responsive portfolio website built with a focus on clean design and sm
 └── .gitignore           # Ignore unnecessary files
 ```
 
+css/
+├── base/
+│   ├── reset.css
+│   ├── variables.css
+│   └── typography.css
+├── components/
+│   ├── buttons.css
+│   ├── cards.css
+│   ├── navigation.css
+│   └── footer.css
+├── sections/
+│   ├── hero.css
+│   ├── about.css
+│   ├── projects.css
+│   ├── experience.css
+│   └── contact.css
+├── utils/
+│   ├── animations.css
+│   └── responsive.css
+└── main.css
+
+
 
 ## Styling Features
 

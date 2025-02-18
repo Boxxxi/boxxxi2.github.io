@@ -50,6 +50,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Project cards stagger animation
+    const projectCards = document.querySelectorAll('.project-card');
+    const projectObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    // Optional: remove observer after animation
+                    projectObserver.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.1,
+            rootMargin: '50px'
+        }
+    );
+
+    projectCards.forEach(card => projectObserver.observe(card));
+
     // Initialize all animations
     const initAnimations = () => {
         setupTimelineAnimation();

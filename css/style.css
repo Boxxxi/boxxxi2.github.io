@@ -1,12 +1,14 @@
 /* style.css */
 :root {
-    --primary: #004d99;
+    --primary: #2fbf71;
     /* Darker blue */
-    --secondary: #6600cc;
+    --secondary: #e05263;
     --background: #0a0a0a;
     --surface: rgba(255, 255, 255, 0.07);
     --text: #e6e6e6;
+    /* --text: #D8F3DC; */
     --text-muted: #a6a6a6;
+    /* --text-muted: #95d5b2 */
 }
 
 /* Base styles */
@@ -45,7 +47,7 @@ h3 {
 /* Glow effect for headings */
 .glow {
     text-shadow: 0 0 15px rgb(7, 131, 255),
-        0 0 25px rgba(0, 77, 153, 0.3);
+        0 0 25px var(--secondary);
 }
 
 /* Typewriter effect */
@@ -97,11 +99,11 @@ nav {
 }
 
 .nav-links a:hover {
-    color: var(--primary);
+    color: var(--secondary);
 }
 
 .nav-links a.active {
-    color: var(--primary);
+    color: var(--secondary);
     position: relative;
 }
 
@@ -112,7 +114,7 @@ nav {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--primary);
+    background-color: var(--secondary);
 }
 
 .theme-toggle {
@@ -265,7 +267,7 @@ main {
 
 .skill-card i {
     font-size: 2rem;
-    color: var(--primary);
+    color: var(--secondary);
     margin-bottom: 1rem;
 }
 
@@ -326,7 +328,8 @@ main {
     content: '';
     position: absolute;
     width: 4px;
-    background: linear-gradient(180deg, #4a90e2, #67b26f);
+    /* background: linear-gradient(180deg, var(--primary), var(--secondary)); */
+    background: var(--primary);
     top: 0;
     bottom: 0;
     left: 50%;
@@ -361,7 +364,7 @@ main {
     position: absolute;
     width: 16px;
     height: 16px;
-    background: #4a90e2;
+    background: var(--primary);
     border-radius: 50%;
     top: 30px;
     left: 50%;
@@ -373,21 +376,20 @@ main {
     position: absolute;
     top: 0;
     width: 100%;
-    text-align: center;
+    text-align: left;
     font-size: 0.9em;
-    color: #4a90e2;
     margin-bottom: 10px;
 }
 
 .timeline-item h3 {
     margin-top: 25px;
     margin-bottom: 10px;
+    color: var(--secondary);
 }
-
 
 .timeline-item:hover .timeline-dot {
     transform: translateX(-50%) scale(1.5);
-    background: #67b26f;
+    background: #2A7221;
 }
 
 .timeline-item:hover .timeline-content {
@@ -508,25 +510,178 @@ main {
     }
 }
 
-/* Projects Grid */
+/* Projects Section Styles */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* Fixed 2 columns */
     gap: 2rem;
-    width: 100%;
+    padding: 1rem;
     max-width: 1200px;
+    margin: 0 auto;
 }
 
 .project-card {
-    text-align: center;
+    position: relative;
+    padding: 0;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%; /* Ensure consistent height */
+}
+
+.project-image {
+    width: 100%;
+    height: 200px; /* Fixed height for consistency */
+    overflow: hidden;
+    position: relative;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers area without distortion */
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Add padding to content area */
+.project-card h3,
+.project-card p,
+.project-card .tech-stack,
+.project-card .project-links {
+    padding: 0 1.5rem;
+}
+
+.project-card h3 {
+    margin-top: 1.5rem; /* Space after image */
+    color: var(--secondary);
+}
+
+.project-card .project-links {
+    padding-bottom: 1.5rem; /* Space at bottom */
+    color: var(--primary);
+}
+
+/* For development: CSS-only placeholder if image is missing */
+.project-image:empty {
+    background: linear-gradient(45deg, #e0e0e0, #f5f5f5);
+}
+
+/* Optional: Add overlay on hover */
+.project-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-image::after {
+    opacity: 1;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tech-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    background: var(--accent);
+    color: var(--text-light);
+    font-weight: 500;
 }
 
 .project-links {
     display: flex;
     gap: 1rem;
-    justify-content: center;
-    margin-top: 1rem;
+    margin-top: auto;
 }
+
+.github-button,
+.article-button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.github-button {
+    background: var(--primary);
+    color: var(--text-light);
+}
+
+.article-button {
+    background: var(--background);
+    color: var(--text);
+}
+
+.github-button:hover,
+.article-button:hover:not(.disabled) {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .project-image {
+        height: 180px;
+    }
+
+    .project-card {
+        max-width: 100%;
+    }
+
+    .project-links {
+        flex-direction: column;
+    }
+}
+/* Animation for project cards */
+.project-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger the animations */
+.project-card:nth-child(1) { animation-delay: 0.1s; }
+.project-card:nth-child(2) { animation-delay: 0.2s; }
+.project-card:nth-child(3) { animation-delay: 0.3s; }
 
 /* Skills */
 .skills {
