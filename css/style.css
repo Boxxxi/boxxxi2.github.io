@@ -843,6 +843,7 @@ main {
     overflow-x: auto;
     padding: 1rem;
     margin-bottom: 2rem;
+    justify-content: center;
 }
 
 .tab-btn {
@@ -850,7 +851,7 @@ main {
     border: none;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.1);
-    color: var(--text-light);
+    color: var(--primary);
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
@@ -895,16 +896,24 @@ main {
 
 .gallery-main {
     width: 100%;
-    aspect-ratio: 16/9;
+    max-width: 1200px;
     overflow: hidden;
     border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color); /* Optional: Ensure a good background */
+    transition: height 0.5s ease-in-out;
+    position: relative;
 }
 
 .gallery-main img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* Auto-fits the image while maintaining aspect ratio */
+    transition: opacity 0.5s ease-in-out height 0.5s ease-in-out;
 }
+
 
 .gallery-scroll {
     overflow-x: auto;
@@ -920,11 +929,15 @@ main {
     flex: 0 0 200px;
     aspect-ratio: 1;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out;
 }
 
 .gallery-item:hover {
     transform: translateY(-5px);
+}
+
+.gallery-item:hover-scale {
+    transform: scale(1.1);
 }
 
 .gallery-item img {
