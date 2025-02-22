@@ -50,14 +50,53 @@ h3 {
         0 0 25px var(--secondary);
 }
 
+
 /* Typewriter effect */
 .typewriter {
-    border-right: 2px solid var(--primary);
-    white-space: nowrap;
+    display: inline-block;
+    white-space: pre-wrap; /* Allows multi-line text */
     overflow: hidden;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    max-width: fit-content; /* Stops exactly where text ends */
     -webkit-text-fill-color: var(--secondary);
+    clip-path: inset(0 100% 0 0); /* Initially hides text */
+    animation: typing 3.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
 }
+
+/* Typing Animation */
+@keyframes typing {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* Blinking Cursor Effect */
+@keyframes blink-caret {
+    from,
+    to {
+        border-color: transparent
+    }
+    50% {
+        border-color: var(--secondary)
+    }
+}
+
+.blink {
+    animation: blink-caret 1s infinite;
+}
+
+
+/* Blinking cursor effect for last character */
+.typewriter::after {
+    content: "|"; /* Cursor */
+    display: inline-block;
+    width: 0.1em;
+    border-right: 2px solid var(--secondary);
+    animation: blink-caret 0.75s step-end infinite;
+}
+
 
 /* Navigation */
 nav {
@@ -1241,33 +1280,6 @@ footer {
         align-items: center;
         gap: 1rem;
     }
-}
-
-/* Animations */
-@keyframes typing {
-    from {
-        width: 0
-    }
-
-    to {
-        width: 100%
-    }
-}
-
-@keyframes blink-caret {
-
-    from,
-    to {
-        border-color: transparent
-    }
-
-    50% {
-        border-color: var(--primary)
-    }
-}
-
-.blink {
-    animation: blink-caret 1s infinite;
 }
 
 /* Responsive Design */
