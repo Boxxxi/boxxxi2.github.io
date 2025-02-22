@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('section');
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navContent = document.querySelector('.nav-links');
+    const externalLinks = document.querySelectorAll("a:not(.nav-links a)");
 
     // Navigation highlighting based on scroll position
     function updateActiveNav() {
@@ -57,4 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize active nav on page load
     updateActiveNav();
+
+    externalLinks.forEach(link => {
+        if (link.href && !link.href.startsWith("#")) {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+        }
+    });
 });
