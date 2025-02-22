@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
+    <rect width="100%" height="100%" fill="#000"/>
+    <!-- Countries will be added as path elements -->
+    <path id="USA" d="M 150 120 L 280 120 L 280 180 L 150 180 Z" />
+    <path id="CAN" d="M 150 60 L 280 60 L 280 119 L 150 119 Z" />
+    <path id="MEX" d="M 150 181 L 230 181 L 230 220 L 150 220 Z" />
+    <path id="GRL" d="M 290 20 L 350 20 L 350 80 L 290 80 Z" />
+    <path id="BRA" d="M 220 250 L 280 250 L 280 320 L 220 320 Z" />
+    <path id="ARG" d="M 220 321 L 260 321 L 260 380 L 220 380 Z" />
+    <path id="GBR" d="M 420 100 L 430 100 L 430 110 L 420 110 Z" />
+    <path id="FRA" d="M 425 120 L 445 120 L 445 135 L 425 135 Z" />
+    <path id="DEU" d="M 445 110 L 465 110 L 465 125 L 445 125 Z" />
+    <path id="ESP" d="M 415 135 L 430 135 L 430 150 L 415 150 Z" />
+    <path id="ITA" d="M 445 135 L 465 135 L 465 160 L 445 160 Z" />
+    <path id="RUS" d="M 470 60 L 700 60 L 700 130 L 470 130 Z" />
+    <path id="CHN" d="M 650 140 L 750 140 L 750 200 L 650 200 Z" />
+    <path id="IND" d="M 620 180 L 670 180 L 670 230 L 620 230 Z" />
+    <path id="JPN" d="M 780 140 L 790 140 L 790 170 L 780 170 Z" />
+    <path id="AUS" d="M 740 300 L 800 300 L 800 350 L 740 350 Z" />
+    <path id="ZAF" d="M 480 320 L 520 320 L 520 350 L 480 350 Z" />
+    <path id="EGY" d="M 490 190 L 520 190 L 520 210 L 490 210 Z" />
+    <path id="NGA" d="M 440 230 L 470 230 L 470 250 L 440 250 Z" />
+    <path id="SAU" d="M 530 180 L 570 180 L 570 210 L 530 210 Z" />
+    <path id="IDN" d="M 700 250 L 780 250 L 780 280 L 700 280 Z" />
+    <path id="THA" d="M 680 210 L 700 210 L 700 230 L 680 230 Z" />
+    <path id="VNM" d="M 700 200 L 720 200 L 720 230 L 700 230 Z" />
+    <path id="PHL" d="M 740 200 L 760 200 L 760 230 L 740 230 Z" />
+    <path id="NZL" d="M 850 350 L 870 350 L 870 370 L 850 370 Z" />
+</svg>

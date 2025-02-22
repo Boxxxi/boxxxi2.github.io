@@ -21,6 +21,8 @@
     <script src="js/readme.js" defer></script>
     <script src="js/script.js" defer></script>
     <script src="js/animations.js" defer></script>
+    <script src="js/map.js" defer></script>
+    <script src="js/tabs.js" defer></script>
     <script src="js/theme-toggle.js" defer></script>
 </head>
 <body>
@@ -32,6 +34,7 @@
                 <a href="#about">About</a>
                 <a href="#experience">Experience</a>
                 <a href="#projects">Projects</a>
+                <a href="#extras">Extras</a>
                 <a href="#contact">Contact</a>
             </div>
         </div>
@@ -65,7 +68,9 @@
 
         <section id="about" class="section animate-on-scroll">
             <div class="glass-card">
-                <h2>About Me</h2>
+                <div class="section-title">
+                    <h2>About Me</h2>
+                </div>
                 <p class="about-description">
                     I’m a problem-solver at heart, blending statistics, AI, and automation to build intelligent systems that actually work. 
                     With years of experience in data science, I’ve designed scalable AI solutions, streamlined workflows, and built cutting-edge 
@@ -122,7 +127,7 @@
             <div class="section-title">
                 <h2>Experience</h2>
             </div>
-            <div class="timeline">
+            <div class="timeline glass">
                 <!-- Senior Data Scientist -->
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
@@ -271,11 +276,13 @@
 
         <section id="projects" class="section animate-on-scroll">
             <div class="glass-card">
-                <h2>Featured Projects</h2>
+                <div class="section-title">
+                    <h2>Featured Projects</h2>
+                </div>
                 <div class="projects-grid">
                     <div class="project-card glass">
                         <div class="project-image">
-                            <img src="assets/images/DALLE_auto_regexify.webp" alt="Project Preview" loading="lazy"/>
+                            <img src="assets/images/projects/DALLE_auto_regexify.webp" alt="Project Preview" loading="lazy"/>
                         </div>
                         <h3>Auto-RegexIfy</h3>
                         <p>Regex-based system that generates generalized entity capturing regex from text batches supplemented by Gen AI.</p>
@@ -296,7 +303,7 @@
         
                     <div class="project-card glass">
                         <div class="project-image">
-                            <img src="assets/images/DALLE_merchant_categorization.webp" alt="Project Preview" loading="lazy"/>
+                            <img src="assets/images/projects/DALLE_merchant_categorization.webp" alt="Project Preview" loading="lazy"/>
                         </div>
                         <h3>Unsupervised Merchant Categorization</h3>
                         <p>Merchant Categorization using NLP and Clustering Techniques</p>
@@ -319,7 +326,7 @@
         
                     <div class="project-card glass">
                         <div class="project-image">
-                            <img src="assets/images/DALLE_lstm_classification.webp" alt="Project Preview" loading="lazy"/>
+                            <img src="assets/images/projects/DALLE_lstm_classification.webp" alt="Project Preview" loading="lazy"/>
                         </div>
                         <h3>Multi-Category SMS Classification</h3>
                         <p>Multi-class SMS classification over heirarchically dependent categories</p>
@@ -343,7 +350,7 @@
 
                     <div class="project-card glass">
                         <div class="project-image">
-                            <img src="assets/images/DALLE_credit_scoring.webp" alt="Project Preview" loading="lazy"/>
+                            <img src="assets/images/projects/DALLE_credit_scoring.webp" alt="Project Preview" loading="lazy"/>
                         </div>
                         <h3>Credit-Risk Scoring</h3>
                         <p>Generation of Credit-Risk scores using Payment Default data</p>
@@ -367,11 +374,174 @@
                 </div>
             </div>
         </section>
+
+        <section id="extras" class="section animate-on-scroll">
+            <div class="glass-card">
+                <div class="section-title">
+                    <h2>Extras</h2>
+                </div>
+                <p>A glimpse into my creative side!</p>
+                
+                <!-- Tab Navigation -->
+                <div class="tabs-container glass">
+                    <div class="tab-buttons">
+                        <button class="tab-btn glass active" data-tab="photography">Photography</button>
+                        <button class="tab-btn glass" data-tab="origami">Origami</button>
+                        <button class="tab-btn glass" data-tab="drawing">Drawing</button>
+                        <button class="tab-btn glass" data-tab="concerts">Concerts</button>
+                        <button class="tab-btn glass" data-tab="travel">Places I've Been</button>
+                    </div>
         
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <!-- Origami Tab -->
+                        <div class="tab-pane" id="origami">
+                            <div class="masonry-gallery">
+                                <div class="masonry-item glass">
+                                    <img src="assets/images/origami/IMG_20170801_020828_Original.JPG" alt="Origami 1" loading="lazy"/>
+                                </div>
+                                <div class="masonry-item glass">
+                                    <img src="assets/images/origami/IMG_20170826_022239_Original.JPG" alt="Origami 1" loading="lazy"/>
+                                </div>
+                                <div class="masonry-item glass">
+                                    <img src="assets/images/origami/IMG_20181231_131207_Original.JPG" alt="Origami 1" loading="lazy"/>
+                                </div>
+                                <div class="masonry-item glass">
+                                    <img src="assets/images/origami/IMG_20191227_190929_Original.JPG" alt="Origami 1" loading="lazy"/>
+                                </div>
+                                <div class="masonry-item glass">
+                                    <img src="assets/images/origami/IMG_20191228_192006_Original.JPG" alt="Origami 1" loading="lazy"/>
+                                </div>
+                                <div class="masonry-item glass">
+                                    <img src="assets/images/origami/IMG_20200102_222145 Copy.JPG" alt="Origami 1" loading="lazy"/>
+                                </div>
+                                <div class="masonry-item glass">
+                                    <img src="assets/images/origami/FB_IMG_1590856372646_Original.JPG" alt="Origami 1" loading="lazy"/>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- Photography Tab -->
+                        <div class="tab-pane active" id="photography">
+                            <div class="gallery-container">
+                                <div class="gallery-main glass">
+                                    <img id="photography-featured" src="assets/images/photos/C12B3793-EDFD-4BFE-8C7E-690CDAC6FE9E_1_102_a.jpeg" alt="Featured Photo" loading="lazy"/>
+                                </div>
+                                <div class="gallery-scroll">
+                                    <div class="gallery-track">
+                                        <!-- Add your photography images here -->
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/IMG_0177.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/IMG_0180.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/IMG_0200 Copy.JPG" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/IMG_0213.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/IMG_0250.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/IMG_0279.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/IMG_0291.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/6EED17A3-0AF4-4875-8CE0-27D4A7F64986_1_102_o.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/24B33ED2-26E5-48EC-AC5F-2C8DC8C669B4_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/344F13BB-AD24-46DC-93E6-95A3D82EFAC9_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/545E0B2A-D39B-46B5-A213-099C6DBEBD63_1_102_o.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/4175FE59-50C6-4E40-8E50-2E50878674D1_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/B69EAA76-29BF-4E56-BE85-D0944B1B96EC_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/B9544366-5348-45BB-BD2A-1E0736E4B455_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/BD133B53-B056-44EB-BCDD-70501D69FF98_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/C12B3793-EDFD-4BFE-8C7E-690CDAC6FE9E_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/DFED0AD7-69FC-4F58-9EF2-DE7EA794488F_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/E2EB2A19-B28D-46E7-8A15-F9240F20BC00_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                                        <div class="gallery-item glass" onclick="updateMainImage(this, 'photography-featured')">
+                                            <img src="assets/images/photos/F316C761-BFF8-41CA-8A81-30127E0BC8D3_1_102_a.jpeg" alt="Photo 1" loading="lazy"/>
+                                        </div>
+                            </div>
+                        </div>
+        
+                        <!-- Drawing Tab -->
+                        <div class="tab-pane" id="drawing">
+                            <div class="masonry-gallery">
+                                <!-- Add your drawings here -->
+                                <div class="masonry-item glass">
+                                    <img src="assets/images/drawings/1.jpg" alt="Drawing 1" loading="lazy"/>
+                                    <div class="image-caption">Sketch</div>
+                                </div>
+                                <!-- Add more masonry items -->
+                            </div>
+                        </div>
+        
+                        <!-- Concerts Tab -->
+                        <div class="tab-pane" id="concerts">
+                            <div class="timeline glass">
+                                <!-- Add your concert experiences here -->
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-date">Date</div>
+                                        <h3>Concert Name</h3>
+                                        <p>Description</p>
+                                    </div>
+                                </div>
+                                <!-- Add more timeline items -->
+                            </div>
+                        </div>
+        
+                        <!-- Travel Tab (Map) -->
+                        <div class="tab-pane" id="travel">
+                            <div class="world-map">
+                                <svg id="world-map" viewBox="0 0 1000 500">
+                                    <!-- Map will be inserted here via JavaScript -->
+                                </svg>
+                                <div id="map-tooltip" class="map-tooltip"></div>
+                                <div class="map-controls">
+                                    <button id="zoom-in" class="zoom-btn glass">+</button>
+                                    <button id="zoom-out" class="zoom-btn glass">-</button>
+                                    <button id="reset-map" class="zoom-btn glass">↺</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>        
 
         <section id="contact" class="section animate-on-scroll">
             <div class="glass-card">
-                <h2>Get In Touch</h2>
+                <div class="section-title">
+                    <h2>Get In Touch</h2>
+                </div>
                 <p>Feel free to reach out for collaborations or just a friendly hello</p>
                 <div class="contact-links">
                     <a href="#" class="glass">GitHub</a>
