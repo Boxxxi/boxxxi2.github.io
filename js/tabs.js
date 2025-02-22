@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         activeButton?.classList.add('active');
         activePane?.classList.add('active');
+
+        // Trigger resize event when switching to travel tab
+        if (tabId === 'travel') {
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+            }, 100);
+        }
     }
 
     tabButtons.forEach(button => {

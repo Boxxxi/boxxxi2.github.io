@@ -1,46 +1,66 @@
 document.addEventListener('DOMContentLoaded', () => {
     const mapContainer = document.getElementById('world-map');
+    let mapInitialized = false;
 
     // Define visited cities with their coordinates and frequency
     const visitedCities = {
-        'New York': { 
-            lat: 40.7128, 
-            lng: -74.0060, 
-            frequency: 2,
-            country: 'United States'
-        },
-        'London': { 
-            lat: 51.5074, 
-            lng: -0.1278, 
-            frequency: 1,
-            country: 'United Kingdom'
-        },
-        'Tokyo': { 
-            lat: 35.6762, 
-            lng: 139.6503, 
-            frequency: 2,
-            country: 'Japan'
-        },
+        // 'New York': { 
+        //     lat: 40.7128, 
+        //     lng: -74.0060, 
+        //     frequency: 2,
+        //     country: 'United States'
+        // },
+        // 'London': { 
+        //     lat: 51.5074, 
+        //     lng: -0.1278, 
+        //     frequency: 1,
+        //     country: 'United Kingdom'
+        // },
+        // 'Tokyo': { 
+        //     lat: 35.6762, 
+        //     lng: 139.6503, 
+        //     frequency: 2,
+        //     country: 'Japan'
+        // },
         'Mumbai': { 
             lat: 19.0760, 
             lng: 72.8777, 
             frequency: 3,
             country: 'India'
-        },
-        // Add more cities as needed
+        }
     };
 
-    fetch('assets/world-map-detailed.svg')
-        .then(response => response.text())
-        .then(svgContent => {
-            mapContainer.innerHTML = svgContent;
-            addCityMarkers();
-            attachMapEvents();
-        })
-        .catch(error => console.error('Error loading map:', error));
+    // Function to initialize map
+    function initializeMap() {
+        if (mapInitialized) return;
+        
+        fetch('assets/maps/world-map-detailed.svg')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(svgContent => {
+                console.log('SVG content loaded'); // Debug log
+                mapContainer.innerHTML = svgContent;
+                addCityMarkers();
+                attachMapEvents();
+                mapInitialized = true;
+            })
+            .catch(error => {
+                console.error('Error loading map:', error);
+                mapContainer.innerHTML = '<div class="map-error">Error loading map</div>';
+            });
+    }
 
     function addCityMarkers() {
         const svg = document.querySelector('#world-map');
+        if (!svg) {
+            console.error('SVG element not found');
+            return;
+        }
+
         const svgNS = "http://www.w3.org/2000/svg";
         
         // Get SVG viewport dimensions
@@ -56,9 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add markers for each city
         Object.entries(visitedCities).forEach(([cityName, data]) => {
             // Convert lat/lng to SVG coordinates
-            // Adjusted latitude calculation to fix the positioning
-            const x = (data.lng + 180) * (svgWidth / 360);
-            const y = svgHeight - ((data.lat + 25) * (svgHeight / 180));
+            const x = ((data.lng + 180) * (svgWidth / 360)) * (1652.47 / 360); // Adjust for Mercator width
+
+            const latRad = data.lat * Math.PI / 180;
+            const mercN = Math.log(Math.tan((Math.PI / 4) + (latRad / 2)));
+            const y = (1 - (mercN / Math.PI)) * (1220.64 / 2); // Adjust for Mercator height
+
 
             // Create marker group
             const cityGroup = document.createElementNS(svgNS, "g");
@@ -78,14 +101,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add tooltip functionality
             cityGroup.addEventListener('mouseover', (e) => {
                 const tooltip = document.getElementById('map-tooltip');
-                tooltip.style.display = 'block';
-                tooltip.innerHTML = `${cityName}<br>${data.country}`;
-                tooltip.style.left = `${e.pageX + 10}px`;
-                tooltip.style.top = `${e.pageY + 10}px`;
+                if (tooltip) {
+                    tooltip.style.display = 'block';
+                    tooltip.innerHTML = `${cityName}<br>${data.country}`;
+                    tooltip.style.left = `${e.pageX + 10}px`;
+                    tooltip.style.top = `${e.pageY + 10}px`;
+                }
             });
 
             cityGroup.addEventListener('mouseleave', () => {
-                document.getElementById('map-tooltip').style.display = 'none';
+                const tooltip = document.getElementById('map-tooltip');
+                if (tooltip) {
+                    tooltip.style.display = 'none';
+                }
             });
 
             cityGroup.appendChild(pulse);
@@ -93,65 +121,82 @@ document.addEventListener('DOMContentLoaded', () => {
             markerGroup.appendChild(cityGroup);
         });
     }
-});
 
-// Zoom Controls
-let currentScale = 1;
-let translateX = 0;
-let translateY = 0;
+    function attachMapEvents() {
+        // Initialize zoom and pan variables
+        let currentScale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        let isDragging = false;
+        let startX, startY;
 
-document.getElementById('zoom-in')?.addEventListener('click', () => adjustZoom(1.2));
-document.getElementById('zoom-out')?.addEventListener('click', () => adjustZoom(0.8));
+        // Zoom Controls
+        document.getElementById('zoom-in')?.addEventListener('click', () => adjustZoom(1.2));
+        document.getElementById('zoom-out')?.addEventListener('click', () => adjustZoom(0.8));
+        document.getElementById('reset-map')?.addEventListener('click', resetMap);
 
-function adjustZoom(factor) {
-    const map = document.getElementById('world-map');
-    currentScale *= factor;
-    // Limit zoom levels
-    currentScale = Math.min(Math.max(currentScale, 0.5), 4);
-    updateMapTransform();
-}
+        function adjustZoom(factor) {
+            currentScale *= factor;
+            currentScale = Math.min(Math.max(currentScale, 0.5), 4);
+            updateMapTransform();
+        }
 
-function updateMapTransform() {
-    const map = document.getElementById('world-map');
-    map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
-}
+        function updateMapTransform() {
+            if (mapContainer) {
+                mapContainer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+            }
+        }
 
-// Add mouse wheel zoom support
-document.getElementById('world-map')?.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    const factor = e.deltaY < 0 ? 1.1 : 0.9;
-    adjustZoom(factor);
-});
+        function resetMap() {
+            currentScale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateMapTransform();
+        }
 
-// Pan functionality
-let isDragging = false;
-let startX, startY;
+        // Add mouse wheel zoom support
+        mapContainer?.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const factor = e.deltaY < 0 ? 1.1 : 0.9;
+            adjustZoom(factor);
+        });
 
-document.getElementById('world-map')?.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startX = e.clientX - translateX;
-    startY = e.clientY - translateY;
-    e.target.style.cursor = 'grabbing';
-});
+        // Pan functionality
+        mapContainer?.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            if (mapContainer) mapContainer.style.cursor = 'grabbing';
+        });
 
-document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    
-    translateX = e.clientX - startX;
-    translateY = e.clientY - startY;
-    updateMapTransform();
-});
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateMapTransform();
+        });
 
-document.addEventListener('mouseup', () => {
-    isDragging = false;
-    const map = document.getElementById('world-map');
-    if (map) map.style.cursor = 'grab';
-});
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            if (mapContainer) mapContainer.style.cursor = 'grab';
+        });
+    }
 
-// Reset map position and zoom
-document.getElementById('reset-map')?.addEventListener('click', () => {
-    currentScale = 1;
-    translateX = 0;
-    translateY = 0;
-    updateMapTransform();
+    // Initialize map when travel tab is clicked
+    document.querySelectorAll('.tab-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            if (button.getAttribute('data-tab') === 'travel') {
+                setTimeout(() => {
+                    initializeMap();
+                    window.dispatchEvent(new Event('resize'));
+                }, 100);
+            }
+        });
+    });
+
+    // If travel tab is active by default, initialize map
+    if (document.querySelector('#travel')?.classList.contains('active')) {
+        initializeMap();
+    }
 });

@@ -831,14 +831,21 @@ main {
     position: relative;
 }
 
+/* Tab styles */
 .tab-pane {
-    display: none;
-    animation: fadeIn 0.5s ease;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .tab-pane.active {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    position: relative;
 }
+
 
 /* Gallery Styles */
 .gallery-container {
@@ -916,18 +923,18 @@ main {
 }
 
 /* Timeline for Concerts */
-.timeline {
+.timeline2 {
     position: relative;
     padding: 2rem;
 }
 
-.timeline-item {
+.timeline2-item {
     position: relative;
     padding-left: 2rem;
     margin-bottom: 2rem;
 }
 
-.timeline-dot {
+.timeline2-dot {
     position: absolute;
     left: 0;
     top: 0;
@@ -966,27 +973,19 @@ main {
 }
 
 /* Map Section Styles */
-#map {
-    background-color: var(--bg-dark);
-    color: var(--text-light);
-    padding: 4rem 2rem;
-}
-
 .map-container {
-    margin-top: 2rem;
-    padding: 2rem;
-    border-radius: 15px;
-    position: relative;
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.world-map {
     position: relative;
     width: 100%;
-    height: 500px;
+    max-width: 1600px;  /* Keep the aspect ratio */
+    height: auto;  /* Allow it to scale */
+    margin: 0 auto;
     overflow: hidden;
-    cursor: grab;
-    border-radius: 10px;
+}
+
+#world-map {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
 #world-map {
@@ -1002,6 +1001,7 @@ main {
     stroke: rgba(255, 255, 255, 0.3);
     stroke-width: 0.5;
     transition: all 0.3s ease;
+    vector-effect: non-scaling-stroke;
 }
 
 /* City marker styles */
@@ -1010,13 +1010,13 @@ main {
 }
 
 .city-dot {
-    fill: var(--secondary);
+    fill: var(--primary);
     stroke: white;
     stroke-width: 1;
 }
 
 .city-pulse {
-    fill: var(--secondary);
+    fill: var(--primary);
     fill-opacity: 0.3;
     animation: pulse 2s ease-out infinite;
 }
@@ -1041,6 +1041,7 @@ main {
     }
 }
 
+/* Map tooltip */
 .map-tooltip {
     position: fixed;
     display: none;
@@ -1053,10 +1054,9 @@ main {
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
-    text-align: center;
-    line-height: 1.4;
 }
 
+/* Map controls */
 .map-controls {
     position: absolute;
     bottom: 20px;
@@ -1086,6 +1086,7 @@ main {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* Map legend */
 .map-legend {
     margin-top: 1rem;
     padding: 1rem;
@@ -1102,7 +1103,7 @@ main {
     align-items: center;
     gap: 0.5rem;
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--text);
 }
 
 .legend-color {
@@ -1123,26 +1124,34 @@ main {
     background-color: rgba(46, 213, 115, 0.3);
 }
 
-/* Responsive styles */
+/* Tab-specific map styles */
+#travel {
+    min-height: 500px;
+    width: 100%;
+}
+
+/* Responsive styles for map */
 @media (max-width: 768px) {
     .map-container {
-        padding: 1rem;
+        height: 400px;
+        padding: 0.5rem;
     }
 
-    .world-map {
-        height: 300px;
-    }
-
-    .map-legend {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
+    .map-controls {
+        bottom: 10px;
+        right: 10px;
     }
 
     .zoom-btn {
         width: 35px;
         height: 35px;
         font-size: 16px;
+    }
+
+    .map-legend {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .map-tooltip {
@@ -1152,19 +1161,8 @@ main {
 }
 
 @media (max-width: 480px) {
-    .world-map {
-        height: 250px;
-    }
-
-    .map-controls {
-        bottom: 10px;
-        right: 10px;
-    }
-
-    .zoom-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
+    .map-container {
+        height: 300px;
     }
 }
 
