@@ -96,23 +96,42 @@ document.addEventListener('DOMContentLoaded', () => {
         galleryItems.forEach(item => galleryObserver.observe(item));
 
         // Main image update function
-        window.updateMainImage = (element) => {
+        window.updateMainImage = (element, targetId) => {
             const thumbnail = element.querySelector('img');
-            const caption = element.querySelector('.image-caption');
+            const mainImage = document.getElementById(targetId);
             
-            if (galleryMain) {
-                galleryMain.style.opacity = '0';
+            if (!mainImage || !thumbnail) return;
+            
+            // Remove active class from all gallery items
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            element.classList.add('active');
+            
+            // Preload the image to ensure smooth transition
+            const tempImg = new Image();
+            tempImg.onload = () => {
+                // Fade out current image
+                mainImage.classList.remove('active');
                 
+                // Wait for fade out to complete
                 setTimeout(() => {
-                    galleryMain.src = thumbnail.src;
-                    galleryMain.alt = thumbnail.alt;
-                    const mainCaption = galleryMain.nextElementSibling;
-                    if (mainCaption) {
-                        mainCaption.textContent = caption.textContent;
-                    }
-                    galleryMain.style.opacity = '1';
+                    // Update source
+                    mainImage.src = thumbnail.src;
+                    mainImage.alt = thumbnail.alt;
+                    
+                    // Force browser to process the new image
+                    setTimeout(() => {
+                        // Fade in new image
+                        mainImage.classList.add('active');
+                    }, 50);
                 }, 300);
-            }
+            };
+            
+            // Start loading the image
+            tempImg.src = thumbnail.src;
         };
 
         // Arrow key navigation

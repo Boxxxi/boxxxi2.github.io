@@ -5,14 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
         .getPropertyValue('--color-primary')
         .trim();
 
-    // Convert primary color to rgba format for nodes and lines
+    // Convert primary color to rgba format for nodes and lines with reduced opacity
     const nodeColor = primaryColor.startsWith('#') 
-        ? hexToRGBA(primaryColor, 0.5)
-        : convertToRGBA(primaryColor, 0.5);
+        ? hexToRGBA(primaryColor, 0.2) // Reduced opacity from 0.5 to 0.2
+        : convertToRGBA(primaryColor, 0.2);
 
     const lineColor = primaryColor.startsWith('#')
-        ? hexToRGBA(primaryColor, 0.2)
-        : convertToRGBA(primaryColor, 0.2);
+        ? hexToRGBA(primaryColor, 0.1) // Reduced opacity from 0.2 to 0.1
+        : convertToRGBA(primaryColor, 0.1);
 
     // Create and setup canvas
     const particlesContainer = document.getElementById('particles-js');
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.style.left = '0';
     canvas.style.width = '100%';
     canvas.style.height = '100%';
-    canvas.style.zIndex = '-1';
+    canvas.style.zIndex = '-5'; // Lower z-index to ensure it's behind all content
     particlesContainer.appendChild(canvas);
     
     const ctx = canvas.getContext('2d');
@@ -42,18 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Node configuration
     const config = {
-        minNodes: 100,  // Minimum number of nodes for small screens
-        maxNodes: 500,  // Maximum number of nodes for large screens
-        baseDensity: 6000,  // Base density factor (lower = more nodes)
-        mobileBreakpoint: 768,  // Mobile breakpoint in pixels
-        tabletBreakpoint: 1024, // Tablet breakpoint in pixels
-        performanceMode: false,  // Will be set based on device capability
+        minNodes: 30,  // Reduced from 50 to 30
+        maxNodes: 100,  // Reduced from 250 to 100
+        baseDensity: 20000,  // Increased from 12000 to 20000 (higher = fewer nodes)
+        mobileBreakpoint: 768,
+        tabletBreakpoint: 1024,
+        performanceMode: false,
         nodeColor: nodeColor,
         lineColor: lineColor,
-        nodeRadius: 2,
-        nodeVelocity: 0.5,
-        connectionDistance: Math.min(200, window.innerWidth / 5),
-        connectionWidth: 1
+        nodeRadius: 1.5, // Reduced from 2 to 1.5
+        nodeVelocity: 0.2,  // Reduced from 0.3 to 0.2
+        connectionDistance: Math.min(150, window.innerWidth / 6), // Reduced from 200 to 150
+        connectionWidth: 0.5 // Reduced from 1 to 0.5
     };
 
     // Helper functions for color conversion

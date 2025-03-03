@@ -90,6 +90,7 @@ class Gallery {
         this.loading = true;
         const newItem = this.items[index];
         const newSrc = newItem.querySelector('img').src;
+        const newAlt = newItem.querySelector('img').alt || 'Gallery image';
 
         // Update active states
         this.items[this.currentIndex].classList.remove('active');
@@ -98,32 +99,40 @@ class Gallery {
         // Scroll thumbnail into view if needed
         this.scrollThumbnailIntoView(newItem);
 
-        // Create new image
-        const img = new Image();
-        img.src = newSrc;
-        
         try {
-            await new Promise((resolve, reject) => {
+            // Create new image and preload it
+            const img = new Image();
+            
+            await new Promise((resolve) => {
                 img.onload = resolve;
-                img.onerror = reject;
+                img.onerror = resolve; // Still resolve on error
+                img.src = newSrc;
             });
 
-            // Fade out current image
+            // Update the main image
             this.mainImage.classList.remove('active');
             
-            // After a short delay, update and fade in new image
+            // Wait for fade out
+            await new Promise(resolve => setTimeout(resolve, 200));
+            
+            // Update source and alt text
+            this.mainImage.src = newSrc;
+            this.mainImage.alt = newAlt;
+            
+            // Force browser to process the new image
             setTimeout(() => {
-                this.mainImage.src = newSrc;
                 this.mainImage.classList.add('active');
                 this.currentIndex = index;
-            }, 300);
+                
+                // Reset loading state after transition completes
+                setTimeout(() => {
+                    this.loading = false;
+                }, 500);
+            }, 50);
 
         } catch (error) {
             console.error('Failed to load image:', error);
-        } finally {
-            setTimeout(() => {
-                this.loading = false;
-            }, 500);
+            this.loading = false;
         }
     }
 
