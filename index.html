@@ -3,27 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Abhishek Bakshi - Senior Data Scientist and Deep Learning Enthusiast">
+    <meta name="theme-color" content="#004d99">
     <title>Abhishek Bakshi - Portfolio</title>
     
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto+Mono&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+    
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="css/core/reset.css">
+    <link rel="stylesheet" href="css/core/variables.css">
+    <link rel="stylesheet" href="css/core/style.css">
+    <link rel="stylesheet" href="css/effects/glassmorphism.css">
+    
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto+Mono&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/glassmorphism.css">
-
+    <!-- Critical Scripts -->
+    <script src="js/core/performance.js" type="module"></script>
+    <script src="js/core/script.js" defer></script>
+    <script src="js/core/images.js" defer></script>
+    <script src="js/visual-effects/background-network.js" defer></script>
+    <script src="js/visual-effects/particles.js" defer></script>
+    <script src="js/interactive/gallery.js" defer></script>
     
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-    <script src="js/readme.js" defer></script>
-    <script src="js/script.js" defer></script>
-    <script src="js/animations.js" defer></script>
-    <script src="js/tabs.js" defer></script>
-    <script src="js/map.js" defer></script>
-    <script src="js/theme-toggle.js" defer></script>
+    <!-- Deferred Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
+    <script src="js/docs/readme.js" defer></script>
+    <script src="js/visual-effects/animations.js" defer></script>
+    <script src="js/core/tabs.js" defer></script>
+    <script src="js/interactive/theme-toggle.js" defer></script>
 </head>
 <body>
     <nav class="glass">
@@ -72,8 +84,8 @@
                     <h2>About Me</h2>
                 </div>
                 <p class="about-description">
-                    I’m a problem-solver at heart, blending statistics, AI, and automation to build intelligent systems that actually work. 
-                    With years of experience in data science, I’ve designed scalable AI solutions, streamlined workflows, and built cutting-edge 
+                    I'm a problem-solver at heart, blending statistics, AI, and automation to build intelligent systems that actually work. 
+                    With years of experience in data science, I've designed scalable AI solutions, streamlined workflows, and built cutting-edge 
                     NLP and credit scoring models.
 
                     From deep learning to large-scale data engineering, I enjoy making complex ideas accessible and efficient. My goal? 
@@ -123,156 +135,14 @@
         </section>
 
         <!-- Experience Section -->
-        <section id="experience">
+        <section id="experience" class="section animate-on-scroll">
             <div class="section-title">
                 <h2>Experience</h2>
             </div>
-            <div class="timeline glass">
-                <!-- Senior Data Scientist -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Aug 2024 - Present</div>
-                        <h3>Senior Data Scientist</h3>
-                        <h4>FinBox.in</h4>
-                        <ul>
-                            <li>
-                                Built an AI-driven automated data extraction system, replacing manual processes and reducing workload while 
-                                upskilling teams for strategic roles.
-                            </li>
-                            <li>
-                                Developed a regex automation pipeline enhanced with generative AI, boosting data extraction accuracy from 71% 
-                                to 93% and cutting manual effort by 70%.
-                            </li>
-                            <li>
-                                Designed high-accuracy LSTM-based hierarchical classifiers, improving categorization accuracy by 34% with 
-                                reinforcement learning for continuous enhancements.
-                            </li>
-                            <li>
-                                Established SOPs and best practices, ensuring consistent, scalable, and high-quality data solutions across teams.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Data Scientist -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Aug 2021 - Aug 2024</div>
-                        <h3>Data Scientist</h3>
-
-                        <h4>FinBox.in</h4>
-                        <ul>
-                            <li>
-                                Led the redevelopment of DeviceConnect V2, improving predictor accuracy, configurability, and interpretability, 
-                                while reducing maintenance costs by 40%.
-                            </li>
-                            </li>
-                            <li>
-                                Integrated 1,500+ alternative data features (BNPL, UPI, tax, investments, spending patterns) to refine credit 
-                                behavior analysis, improving model performance by 4%.
-                            </li>
-                            <li>
-                                Designed ML-based credit scoring models with an AUC of 74%, delivering the best-performing score across multiple 
-                                lending portfolios for 2.5 years.
-                            </li>
-                            <li>
-                                Optimized scoring API for 20+ models, cutting deployment time by 67% and reducing data product latency by 30%.
-                            </li>
-                            <li>
-                                Developed early warning risk scores for FinBox CollectX, increasing successful client collections from 5% to 15%.
-                            </li>
-                            <li>
-                                Automated workflows with Risk-Airflow & GitHub Actions, reducing product runtime by 30%.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Quant Analyst Intern -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">May 2020 - Jul 2020</div>
-                        <h3>Quant Analyst Intern</h3>
-                        <h4>J.P. Morgan Services Pvt Ltd, Mumbai</h4>
-                        <ul>
-                            <li>
-                                Analyzed trades responsible for outlier risks, designing a ranking metric that reduced portfolio risk by 2%.
-                            </li>
-                            <li>
-                                Validated & fixed discrepancies in automated risk reports, improving accuracy by 43%.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- M. Stat. -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Aug 2019 - Jul 2021</div>
-                        <h3>Master of Statistics</h3>
-                        <h4>Indian Statistical Institute, Kolkata</h4>
-                        <ul>
-                            <li>
-                                Compared deep learning models vs. traditional time series models across multiple datasets.
-                            </li>
-                            <li>
-                                Modelled the success probability of trekking groups on the three primary routes of Mt. Rainier 
-                                using a Zero-N inflated Binomial model and logistic regression.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Data Science Intern -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">May 2019 - Jun 2019</div>
-                        <h3>Data Science Intern</h3>
-                        <h4>Octro.inc</h4>
-                        <ul>
-                            <li>
-                                Built a probabilistic collusion detection algorithm for online card games, correctly identifying 
-                                83% of colluding players.
-                            </li>
-                            <li>
-                                Implemented TrueSkill ranking to detect match-fixing across different win-rate groups.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Subject Matter Expert -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">May 2018 - May 2020</div>
-                        <h3>Subject Matter Expert (Mathematics, Statistics)</h3>
-                        <h4>Chegg.com, AssignmentExperts.com</h4>
-                        <ul>
-                            <li>
-                                Solved 500+ advanced statistical problems and assisted in 100+ machine learning assignments globally.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- B. Stat. -->
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Aug 2016 - May 2019</div>
-                        <h3>Bachelor of Statistics</h3>
-                        <h4>Indian Statistical Institute, Kolkata</h4>
-                        <ul>
-                            <li>
-                                Developed a beat detection algorithm for audio processing, achieving 82% accuracy.
-                            </li>
-                            <li>
-                                Awarded merit scholarships for ranking 3rd and 4th (2017, 2018) in the Madhava Mathematics Competition.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="experience-timeline">
+                <!-- The dial and content will be dynamically inserted by JavaScript -->
             </div>
+            <script src="js/interactive/experience-dial.js"></script>
         </section>
 
         <section id="projects" class="section animate-on-scroll">
@@ -575,8 +445,6 @@
                                     </svg>
                                     <div id="map-tooltip" class="map-tooltip"></div>
                                     <div class="map-controls">
-                                        <button id="zoom-in" class="zoom-btn glass">+</button>
-                                        <button id="zoom-out" class="zoom-btn glass">-</button>
                                         <button id="reset-map" class="zoom-btn glass">↺</button>
                                     </div>
                                 </div>
