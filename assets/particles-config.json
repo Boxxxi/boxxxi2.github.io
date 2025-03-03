@@ -8,12 +8,12 @@
             }
         },
         "color": {
-            "value": "#00fff2"
+            "value": "#00ff9d"
         },
         "line_linked": {
             "enable": true,
             "distance": 150,
-            "color": "#00fff2",
+            "color": "#00ff9d",
             "opacity": 0.4,
             "width": 1
         },

@@ -117,10 +117,10 @@ class ExperienceDial {
         const rect = this.dial.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        
+    
         const clientX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
         const clientY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
-        
+    
         this.startAngle = Math.atan2(clientY - centerY, clientX - centerX);
         this.currentAngle = this.dial.style.transform ? 
             parseFloat(this.dial.style.transform.match(/rotate\(([-\d.]+)deg\)/)[1]) || 0 : 0;
@@ -133,23 +133,23 @@ class ExperienceDial {
         const rect = this.dial.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        
+    
         const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
         const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
-        
+    
         const angle = Math.atan2(clientY - centerY, clientX - centerX);
         let rotation = (angle - this.startAngle) * (180 / Math.PI);
-        
+    
         rotation = (this.currentAngle + rotation) % 360;
         if (rotation < 0) rotation += 360;
 
         this.dial.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-        
+    
         // Calculate year based on rotation
         const yearProgress = rotation / 360;
         const yearRange = this.endYear - this.startYear;
         const year = Math.round(this.startYear + (yearRange * yearProgress));
-        
+    
         this.updateContent(year);
     }
 
@@ -172,13 +172,40 @@ class ExperienceDial {
     }
 
     updateContent(year) {
-        const content = this.getExperienceData(year);
-        this.contentContainer.innerHTML = `
-            <h3>${content.title}</h3>
-            <div class="company">${content.company}</div>
-            <div class="period">${content.period}</div>
-            <div class="description">${content.description}</div>
-        `;
+        const experiences = this.getExperienceData(year);
+    
+        // Clear previous content
+        this.contentContainer.innerHTML = '';
+    
+        // If we have multiple experiences for this year, display all of them
+        if (Array.isArray(experiences)) {
+            experiences.forEach(content => {
+                const experienceElement = document.createElement('div');
+                experienceElement.className = 'experience-item';
+                experienceElement.innerHTML = `
+                    <h3>${content.title}</h3>
+                    <div class="company">${content.company}</div>
+                    <div class="period">${content.period}</div>
+                    <div class="description">${content.description}</div>
+                `;
+                this.contentContainer.appendChild(experienceElement);
+            
+                // Add a separator between experiences except for the last one
+                if (content !== experiences[experiences.length - 1]) {
+                    const separator = document.createElement('div');
+                    separator.className = 'experience-separator';
+                    this.contentContainer.appendChild(separator);
+                }
+            });
+        } else {
+            // Single experience
+            this.contentContainer.innerHTML = `
+                <h3>${experiences.title}</h3>
+                <div class="company">${experiences.company}</div>
+                <div class="period">${experiences.period}</div>
+                <div class="description">${experiences.description}</div>
+            `;
+        }
     }
 
     getExperienceData(year) {
@@ -201,18 +228,20 @@ class ExperienceDial {
                 period: "May 2020 - July 2022",
                 description: `<ul><li>Analyzed trades responsible for outlier risks, designing a ranking metric that reduced portfolio risk by 2%.</li><li>Validated & fixed discrepancies in automated risk reports, improving accuracy by 43%.</li></ul>`
             },
-            2019: {
-                title: "Master of Statistics",
-                company: "Indian Statistical Institute, Kolkata",
-                period: "2021 - 2022",
-                description: `<ul><li>Compared deep learning models vs. traditional time series models across multiple datasets.</li><li>Modelled the success probability of trekking groups on the three primary routes of Mt. Rainier using a Zero-N inflated Binomial model and logistic regression.</li></ul>`
-            },
-            2019: {
-                title: "Data Science Intern",
-                company: "Octro.inc",
-                period: "May 2019 - June 2019",
-                description: `<ul><li>Built a probabilistic collusion detection algorithm for online card games, correctly identifying 83% of colluding players.</li><li>Implemented TrueSkill ranking to detect match-fixing across different win-rate groups.</li></ul>`
-            },
+            2019: [
+                {
+                    title: "Data Science Intern",
+                    company: "Octro.inc",
+                    period: "May 2019 - June 2019",
+                    description: `<ul><li>Built a probabilistic collusion detection algorithm for online card games, correctly identifying 83% of colluding players.</li><li>Implemented TrueSkill ranking to detect match-fixing across different win-rate groups.</li></ul>`
+                },
+                {
+                    title: "Master of Statistics",
+                    company: "Indian Statistical Institute, Kolkata",
+                    period: "Aug 2019 - Jun 2021",
+                    description: `<ul><li>Compared deep learning models vs. traditional time series models across multiple datasets.</li><li>Modelled the success probability of trekking groups on the three primary routes of Mt. Rainier using a Zero-N inflated Binomial model and logistic regression.</li></ul>`
+                }
+            ],
             2018: {
                 title: "Subject Matter Expert (Mathematics, Statistics)",
                 company: "Chegg.com, AssignmentExperts.com",

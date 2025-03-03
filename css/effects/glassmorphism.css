@@ -1,87 +1,108 @@
-/* Glassmorphism Effects */
+/* Glassmorphism Effects - Standardized */
 .glass {
     background: var(--glass-background);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    border: var(--glass-border);
+    border-radius: var(--radius-md);
+    box-shadow: none;
     transition: all var(--transition-normal);
 }
 
 .glass:hover {
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(187, 154, 247, 0.08);
+}
+
+.glass:active {
+    background: rgba(24, 25, 38, 0.8);
+    transition: background 0.2s ease;
 }
 
 .glass-card {
-    /* background: var(--glass-background);
+    background: var(--glass-background);
     backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur)); */
-    /* border: 1px solid var(--glass-border); */
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: var(--glass-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    margin: var(--space-md) 0;
-    /* box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); */
+    padding: 2rem;
+    margin: 1.5rem 0;
+    box-shadow: none;
     transition: all var(--transition-normal);
 }
 
 .glass-card:hover {
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(187, 154, 247, 0.08);
+}
+
+.glass-card:active {
+    background: rgba(24, 25, 38, 0.8);
+    transition: background 0.2s ease;
 }
 
 /* Specific glass effects for different components */
 nav.glass {
-    background: var(--glass-background);
-    backdrop-filter: blur(calc(var(--glass-blur) * 1.5));
-    -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 1.5));
+    background: rgba(24, 25, 38, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(187, 154, 247, 0.1);
 }
 
+/* Special components that should remain visible */
 .skill-card.glass {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: var(--space-lg);
+    background: rgba(24, 25, 38, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(187, 154, 247, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.timeline-item .glass {
-    margin: var(--space-sm);
-    padding: var(--space-md);
+.skill-card.glass:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25),
+                0 0 10px rgba(187, 154, 247, 0.08);
+    transform: translateY(-5px);
+    border: 1px solid rgba(187, 154, 247, 0.1);
 }
 
 .project-card.glass {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
+    background: rgba(24, 25, 38, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(122, 162, 247, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Glass effect for images */
+.project-card.glass:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25),
+                0 0 10px rgba(122, 162, 247, 0.08);
+    transform: translateY(-5px);
+    border: 1px solid rgba(122, 162, 247, 0.1);
+}
+
 .gallery-item.glass {
-    overflow: hidden;
-    position: relative;
+    background: rgba(24, 25, 38, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 158, 100, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.gallery-item.glass img {
-    transition: transform var(--transition-normal);
-}
-
-.gallery-item.glass:hover img {
-    transform: scale(1.05);
+.gallery-item.glass:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25),
+                0 0 10px rgba(255, 158, 100, 0.08);
+    transform: translateY(-5px);
+    border: 1px solid rgba(255, 158, 100, 0.1);
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
-@supports not (backdrop-filter: blur(10px)) {
-    .glass,
-    .glass-card,
-    nav.glass,
-    .skill-card.glass,
-    .project-card.glass,
-    .gallery-item.glass {
-        background: rgba(0, 0, 0, 0.8);
+@supports not (backdrop-filter: blur(5px)) {
+    .glass, .glass-card, nav.glass {
+        background: rgba(16, 17, 27, 0.9);
+    }
+
+    .skill-card.glass, .project-card.glass, .gallery-item.glass {
+        background: rgba(24, 25, 38, 0.9);
     }
 }
 
@@ -98,4 +119,51 @@ nav.glass {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--primary);
+}
+
+/* Ensure text is readable on glass backgrounds */
+.glass, .glass-card {
+    color: var(--text);
+}
+
+.glass h1, .glass h2, .glass h3, .glass h4, .glass h5, .glass h6,
+.glass-card h1, .glass-card h2, .glass-card h3, .glass-card h4, .glass-card h5, .glass-card h6 {
+    color: var(--text);
+}
+
+.glass p, .glass-card p {
+    color: var(--text-muted);
+}
+
+/* Ensure links are visible */
+.glass a, .glass-card a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.glass a:hover, .glass-card a:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* Add subtle glow effects to glass elements on hover */
+.glass-card:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15),
+                0 0 10px rgba(187, 154, 247, 0.05);
+}
+
+.skill-card.glass:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25),
+                0 0 10px rgba(187, 154, 247, 0.08);
+}
+
+.project-card.glass:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25),
+                0 0 10px rgba(122, 162, 247, 0.08);
+}
+
+.gallery-item.glass:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25),
+                0 0 10px rgba(255, 158, 100, 0.08);
 }
