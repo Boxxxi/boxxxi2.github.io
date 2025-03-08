@@ -378,11 +378,25 @@
 
 @media (max-width: 768px) {
     .article-page {
-        padding: 0 0.5rem;
-        margin: 1rem auto;
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0.5rem;
+        padding: 0;
+        width: auto;
+    }
+    
+    .article-sidebar {
+        position: static; /* Remove sticky positioning on mobile */
+        margin-bottom: 1.5rem;
+        top: auto;
+        order: 1; /* Show sidebar first */
+        padding: 1.25rem;
     }
     
     .article-container {
+        order: 2; /* Show content second */
+        max-height: none; /* Remove height limit on mobile */
+        overflow-y: visible; /* Allow natural scrolling */
         padding: 1.5rem;
         font-size: var(--font-size-base);
     }
@@ -409,22 +423,75 @@
     }
     
     .toc-container {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
     
     .toc-container h3 {
-        padding: 0.5rem 0;
+        padding: 0.75rem 0;
+        margin-bottom: 0.5rem;
         border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+        font-size: 1.1rem;
     }
     
     #toc {
-        max-height: 40vh;
+        max-height: 30vh; /* Smaller height on mobile */
+    }
+    
+    #toc a {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    #toc li.h3 {
+        padding-left: 0.75rem;
+    }
+    
+    .article-actions {
+        margin-top: 1.5rem;
+    }
+    
+    .article-actions .btn {
+        font-size: 1rem;
+        padding: 0.7rem 1rem;
+    }
+    
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+    
+    main {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    
+    .article-container {
+        overflow: visible;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Ensure tables don't cause horizontal scrolling of the page */
+    .table-responsive {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Ensure code blocks don't cause horizontal scrolling of the page */
+    .article-container pre {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
 
 @media (max-width: 480px) {
+    .article-page {
+        margin: 0.5rem 0.25rem;
+    }
+    
     .article-container {
-        padding: 1rem;
+        padding: 1.25rem 1rem;
     }
     
     .article-container h1 {
@@ -436,11 +503,12 @@
     }
     
     .article-actions {
-        flex-direction: column;
+        margin-top: 1rem;
     }
     
     .article-actions .btn {
-        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
     }
 }
 
