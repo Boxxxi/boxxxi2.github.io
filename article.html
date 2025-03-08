@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Abhishek Bakshi - Technical Articles and Project Documentation">
+    <meta name="theme-color" content="#004d99">
+    <title>Article - Abhishek Bakshi</title>
+
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto+Mono&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" as="style">
+
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="css/core/reset.css">
+    <link rel="stylesheet" href="css/core/variables.css">
+    <link rel="stylesheet" href="css/core/style.css">
+    <link rel="stylesheet" href="css/effects/glassmorphism.css">
+    <link rel="stylesheet" href="css/docs/article.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto+Mono&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Critical Scripts -->
+    <script src="js/core/performance.js" type="module"></script>
+    <script src="js/core/script.js" defer></script>
+    <script src="js/visual-effects/background-network.js" defer></script>
+
+    <!-- Markdown and Syntax Highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+    
+    <!-- Article Renderer -->
+    <script src="js/docs/article-renderer.js" defer></script>
+</head>
+<body>
+    <nav class="glass">
+        <div class="nav-content">
+            <div class="logo">BOxxxI<span class="blink">_</span></div>
+            <div class="nav-links">
+                <a href="index.html#home">Home</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#extras">Extras</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav> 
+
+    <main>
+        <!-- Background canvas elements will be created by the scripts -->
+        
+        <div class="article-page">
+            <div class="article-container glass-card" id="article-container">
+                <!-- Article content will be rendered here -->
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading article...</p>
+                </div>
+            </div>
+            
+            <div class="article-sidebar glass">
+                <div class="toc-container">
+                    <h3>Table of Contents</h3>
+                    <div id="toc">
+                        <!-- Table of contents will be generated here -->
+                    </div>
+                </div>
+                <div class="article-actions">
+                    <a href="index.html#projects" class="btn btn-outline">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="glass">
+        <div class="footer-content">
+            <p class="typescript-code">
+                <span class="ts-keyword">const</span> <span class="ts-variable">developer</span>: <span class="ts-type">Portfolio</span> = {
+                <br>&nbsp;&nbsp;<span class="ts-property">name</span>: <span class="ts-string">"Abhishek Bakshi"</span>,
+                <br>&nbsp;&nbsp;<span class="ts-property">year</span>: <span class="ts-number">2024</span>,
+                <br>&nbsp;&nbsp;<span class="ts-property">stack</span>: [<span class="ts-string">"AI"</span>, <span class="ts-string">"ML"</span>, <span class="ts-string">"Data Science"</span>]
+                <br>};
+            </p>
+            <div class="footer-links">
+                <a href="#" class="glass">Privacy Policy</a>
+                <a href="#" class="glass">Terms of Use</a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/Boxxxi" class="glass" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/abhishek-bakshi-0b934a153/" class="glass" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="glass" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Generate table of contents
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate table of contents after article is loaded
+            setTimeout(generateTableOfContents, 500); // Wait for article to render
+        });
+        
+        // Generate table of contents from headings
+        function generateTableOfContents() {
+            const headings = document.querySelectorAll('#article-container h2, #article-container h3');
+            const toc = document.getElementById('toc');
+            
+            if (headings.length === 0 || !toc) return;
+            
+            const tocList = document.createElement('ul');
+            
+            headings.forEach((heading, index) => {
+                // Create an ID for the heading if it doesn't have one
+                if (!heading.id) {
+                    heading.id = 'heading-' + index;
+                }
+                
+                const listItem = document.createElement('li');
+                listItem.className = heading.tagName.toLowerCase();
+                
+                const link = document.createElement('a');
+                link.href = '#' + heading.id;
+                link.textContent = heading.textContent;
+                
+                listItem.appendChild(link);
+                tocList.appendChild(listItem);
+            });
+            
+            toc.appendChild(tocList);
+        }
+    </script>
+</body>
+</html> 
