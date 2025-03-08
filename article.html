@@ -112,40 +112,10 @@
     </footer>
 
     <script>
-        // Generate table of contents
+        // Set GitHub link based on article
         document.addEventListener('DOMContentLoaded', () => {
-            // Generate table of contents after article is loaded
-            setTimeout(generateTableOfContents, 500); // Wait for article to render
+            // The table of contents is now generated in article-renderer.js
         });
-        
-        // Generate table of contents from headings
-        function generateTableOfContents() {
-            const headings = document.querySelectorAll('#article-container h2, #article-container h3');
-            const toc = document.getElementById('toc');
-            
-            if (headings.length === 0 || !toc) return;
-            
-            const tocList = document.createElement('ul');
-            
-            headings.forEach((heading, index) => {
-                // Create an ID for the heading if it doesn't have one
-                if (!heading.id) {
-                    heading.id = 'heading-' + index;
-                }
-                
-                const listItem = document.createElement('li');
-                listItem.className = heading.tagName.toLowerCase();
-                
-                const link = document.createElement('a');
-                link.href = '#' + heading.id;
-                link.textContent = heading.textContent;
-                
-                listItem.appendChild(link);
-                tocList.appendChild(listItem);
-            });
-            
-            toc.appendChild(tocList);
-        }
     </script>
 </body>
 </html> 

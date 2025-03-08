@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (articlePath) {
         loadAndRenderArticle(articlePath);
     }
+    
+    // Setup TOC toggle functionality
+    setupTocToggle();
 });
 
 /**
@@ -17,6 +20,27 @@ document.addEventListener('DOMContentLoaded', () => {
 function getArticlePathFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('article');
+}
+
+/**
+ * Setup table of contents toggle functionality
+ */
+function setupTocToggle() {
+    const tocContainer = document.querySelector('.toc-container');
+    if (!tocContainer) return;
+    
+    const tocHeading = tocContainer.querySelector('h3');
+    if (!tocHeading) return;
+    
+    // Check if TOC should be collapsed by default on mobile
+    if (window.innerWidth <= 768) {
+        tocContainer.classList.add('collapsed');
+    }
+    
+    // Toggle TOC visibility when heading is clicked
+    tocHeading.addEventListener('click', () => {
+        tocContainer.classList.toggle('collapsed');
+    });
 }
 
 /**
@@ -90,6 +114,9 @@ async function loadAndRenderArticle(articlePath) {
             loadingSpinner.remove();
         }
         
+        // Generate table of contents after content is loaded
+        setTimeout(generateTableOfContents, 300);
+        
     } catch (error) {
         console.error('Error rendering article:', error);
         document.getElementById('article-container').innerHTML = `
@@ -100,6 +127,44 @@ async function loadAndRenderArticle(articlePath) {
             </div>
         `;
     }
+}
+
+/**
+ * Generate table of contents from headings
+ */
+function generateTableOfContents() {
+    const headings = document.querySelectorAll('#article-container h2, #article-container h3');
+    const toc = document.getElementById('toc');
+    
+    if (headings.length === 0 || !toc) return;
+    
+    const tocList = document.createElement('ul');
+    
+    headings.forEach((heading, index) => {
+        // Create an ID for the heading if it doesn't have one
+        if (!heading.id) {
+            heading.id = 'heading-' + index;
+        }
+        
+        const listItem = document.createElement('li');
+        listItem.className = heading.tagName.toLowerCase();
+        
+        const link = document.createElement('a');
+        link.href = '#' + heading.id;
+        link.textContent = heading.textContent;
+        
+        // Close TOC when a link is clicked on mobile
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.toc-container')?.classList.add('collapsed');
+            }
+        });
+        
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    
+    toc.appendChild(tocList);
 }
 
 /**

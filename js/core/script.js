@@ -65,4 +65,66 @@ document.addEventListener('DOMContentLoaded', () => {
             link.setAttribute("rel", "noopener noreferrer");
         }
     });
+
+    // Check if we need to add mobile menu
+    if (window.innerWidth <= 600) {
+        setupMobileMenu();
+    }
+    
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 600 && !document.querySelector('.mobile-menu')) {
+            setupMobileMenu();
+        }
+    });
+    
+    // Setup mobile menu
+    function setupMobileMenu() {
+        // Only add if it doesn't exist yet
+        if (document.querySelector('.mobile-menu')) return;
+        
+        // Create mobile menu button
+        const mobileMenuBtn = document.createElement('button');
+        mobileMenuBtn.className = 'mobile-menu-btn';
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        
+        // Create mobile menu
+        const mobileMenu = document.createElement('div');
+        mobileMenu.className = 'mobile-menu';
+        
+        // Get navigation links
+        const navLinks = document.querySelector('nav .nav-links');
+        if (!navLinks) return;
+        
+        // Clone navigation links for mobile menu
+        const links = navLinks.querySelectorAll('a');
+        links.forEach(link => {
+            const newLink = link.cloneNode(true);
+            mobileMenu.appendChild(newLink);
+        });
+        
+        // Add mobile menu button to navigation
+        const nav = document.querySelector('nav');
+        if (nav) {
+            nav.appendChild(mobileMenuBtn);
+            document.body.appendChild(mobileMenu);
+            
+            // Toggle mobile menu
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                if (mobileMenu.classList.contains('active')) {
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+                } else {
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+            
+            // Close mobile menu when clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        }
+    }
 });
