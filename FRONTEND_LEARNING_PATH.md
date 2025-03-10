@@ -8,7 +8,7 @@ This README outlines a structured learning path to help you understand and exten
 ### 1. Understanding the Structure (Week 1)
 - **Task**: Map out the entire website structure
 - **Exercise**: Create a visual diagram showing how HTML files, CSS files, and JavaScript files are connected
-- **Goal**: Understand how the components work together
+- **Goal**:  Understand how the components work together
 
 ### 2. CSS Fundamentals (Week 1-2)
 - **Task**: Understand the CSS organization
