@@ -56,12 +56,7 @@ dara[['merchant_name', 'cleaned_merchant_name']].head(10)
 | ABS ABSOLUTE BARBECUES	                   | abs absolute barbecues                         |
 | Bansidhar Packaging	                       | bansidhar packaging                            |
 | Ing*Play Games Rummy	                       | ing play games rummy                           |
-| Axis Focused 25 Fund - REGULAR GROWTH	       | axis focused fund regular growth               |
-| PaytmBBPSCOUHybridflow	                   | paytmbbpscouhybridflow                         |
-| HDB FINANCIAL SERVICES LTD	               | hdb financial services ltd                     |
-| AVENUE SUPERMARTS LTD	                       | avenue supermarts ltd                          |
-| Rashi Peripherals Limited	                   | rashi peripherals limited                      |
-| AIRTEL PAYMENT BANK LTD	                   | airtel payment bank ltd                        |
+
 
 ## 2. Embedding Generation with FastText
 
@@ -172,7 +167,6 @@ data[['merchant_name', 'cluster']].head(10)
 | sri raghavendra ent        | 0             |
 | reliance retail ltd        | 3             |
 | mart retail ltd	         | 3             |
-| bazaar retail pvt	         | 3             |
 | northern arc capital limi	 | 5             |
 | payu finance india pvt ltd | 5             |
 | shubha trading company     | 6             |

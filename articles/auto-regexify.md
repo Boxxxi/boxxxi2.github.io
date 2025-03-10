@@ -82,7 +82,7 @@ def generate_auto_regex(text: str) -> str:
     for part in text.split(" "):
         if part:
             if part in REGEX_MAP:
-               # Replace keywords by corresponding replacement patterns
+                # Replace keywords by corresponding replacement patterns
                 auto_regex += SPACE_REGEX + f"(?:{REGEX_MAP[part]})"
 
             elif part in REGEX_MAP_COMBINED:

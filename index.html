@@ -99,6 +99,19 @@
         </div>
     </footer>
 
-    <!-- No need to include scripts again here as they're already in the head -->
+    <!-- Script to ensure article links open in the same tab -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all article links and ensure they open in the same tab
+            document.querySelectorAll('.article-button').forEach(function(link) {
+                if (!link.classList.contains('disabled')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.location.href = this.getAttribute('href');
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
