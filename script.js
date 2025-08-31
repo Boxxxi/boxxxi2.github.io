@@ -621,6 +621,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup gallery linking from extras section
     setupGalleryLinking();
+    
+    // Initialize hangman game
+    const hangmanGame = new HangmanGameUI();
+    
+    // Connect AI Games card to hangman game
+    const aiGamesCard = document.getElementById('ai-games-card');
+    if (aiGamesCard) {
+        aiGamesCard.addEventListener('click', (e) => {
+            e.preventDefault();
+            hangmanGame.openModal();
+        });
+        aiGamesCard.style.cursor = 'pointer';
+    }
 });
 
 // Gallery linking functionality
@@ -674,3 +687,390 @@ const debouncedScrollHandler = debounce(() => {
 }, 16); // ~60fps
 
 window.addEventListener('scroll', debouncedScrollHandler);
+
+// Hangman Game Implementation
+class HangmanGame {
+    // Maximum number of wrong guesses allowed
+    static MAX_WRONG_GUESSES = 6;
+    
+    /**
+     * Creates a new Hangman game with a random word.
+     */
+    constructor(word = null) {
+        // Use provided word or get a random one
+        this.word = (word || HangmanGame.getRandomWord()).toUpperCase();
+        this.guessedLetters = new Set();
+        this.wrongGuesses = 0;
+        this.gameOver = false;
+        this.playerWon = false;
+    }
+    
+    /**
+     * Makes a guess of the specified letter.
+     * @param letter The letter to guess (case insensitive)
+     * @return true if the letter is in the word, false otherwise
+     */
+    guess(letter) {
+        if (this.gameOver) {
+            return false;
+        }
+        
+        // Convert to uppercase
+        letter = letter.toUpperCase();
+        
+        // Check if the letter has already been guessed
+        if (this.guessedLetters.has(letter)) {
+            return false;
+        }
+        
+        // Add the letter to the set of guessed letters
+        this.guessedLetters.add(letter);
+        
+        // Check if the letter is in the word
+        const correctGuess = this.word.indexOf(letter) >= 0;
+        
+        // If the guess is wrong, increment the wrong guess counter
+        if (!correctGuess) {
+            this.wrongGuesses++;
+            
+            // Check if the player has reached the maximum number of wrong guesses
+            if (this.wrongGuesses >= HangmanGame.MAX_WRONG_GUESSES) {
+                this.gameOver = true;
+                this.playerWon = false;
+            }
+        } else {
+            // Check if the player has won
+            if (this.isWordGuessed()) {
+                this.gameOver = true;
+                this.playerWon = true;
+            }
+        }
+        
+        return correctGuess;
+    }
+    
+    /**
+     * Returns the current state of the word, with unguessed letters replaced by underscores.
+     * @return The current state of the word
+     */
+    getWordState() {
+        let result = '';
+        
+        for (let i = 0; i < this.word.length; i++) {
+            const c = this.word.charAt(i);
+            
+            if (this.guessedLetters.has(c)) {
+                result += c;
+            } else {
+                result += '_';
+            }
+            
+            result += ' ';
+        }
+        
+        return result.trim();
+    }
+    
+    /**
+     * Returns an array of all letters that have been guessed, in alphabetical order.
+     * @return An array of guessed letters
+     */
+    getGuessedLettersList() {
+        return Array.from(this.guessedLetters).sort();
+    }
+    
+    /**
+     * Returns the number of wrong guesses so far.
+     * @return The number of wrong guesses
+     */
+    getWrongGuesses() {
+        return this.wrongGuesses;
+    }
+    
+    /**
+     * Returns whether the game is over.
+     * @return true if the game is over, false otherwise
+     */
+    isGameOver() {
+        return this.gameOver;
+    }
+    
+    /**
+     * Returns whether the player has won.
+     * @return true if the player has won, false otherwise
+     */
+    hasPlayerWon() {
+        return this.playerWon;
+    }
+    
+    /**
+     * Returns the word to guess.
+     * @return The word to guess
+     */
+    getWord() {
+        return this.word;
+    }
+    
+    /**
+     * Checks if the word has been fully guessed.
+     * @return true if the word has been guessed, false otherwise
+     */
+    isWordGuessed() {
+        for (let i = 0; i < this.word.length; i++) {
+            if (!this.guessedLetters.has(this.word.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns a random word from the list.
+     * All words are uppercase.
+     */
+    static getRandomWord() {
+        return HangmanGame.WORDS[Math.floor(Math.random() * HangmanGame.WORDS.length)];
+    }
+
+    // Word list for the game
+    static WORDS = [
+        "ABSTRACT", "ADVANCED", "AIRPLANE", "ALPHABET", "ANALYSIS", 
+        "APPROACH", "ARGUMENT", "ARTISTIC", "AUDIENCE", "BASEBALL",
+        "BATHROOM", "BEAUTIFUL", "BIRTHDAY", "BRILLIANT", "BUSINESS",
+        "CAMPAIGN", "CAPACITY", "CATEGORY", "CHAMPION", "CHEMICAL",
+        "CHILDREN", "CIRCUIT", "CLASSIC", "CLIMATE", "COMPUTER",
+        "CONCRETE", "CONDUCTOR", "CONSIDER", "CREATIVE", "CRITICAL",
+        "CULTURAL", "CUSTOMER", "DATABASE", "DECISION", "DEDICATED",
+        "DELIVERY", "DEMOCRACY", "DESIGNER", "DETAILED", "DETECTIVE",
+        "DIABETES", "DIALOGUE", "DIFFICULT", "DINOSAUR", "DIRECTOR",
+        "DISCOVERY", "DOCUMENT", "DOMESTIC", "DRAMATIC", "ECONOMIC",
+        "EDUCATED", "EGYPTIAN", "ELECTION", "ELEPHANT", "ENGINEER",
+        "ENORMOUS", "ENTRANCE", "ENVIRONMENT", "ESTIMATE", "EXCHANGE",
+        "EXCITING", "EXERCISE", "EXPLICIT", "EXTERNAL", "FACILITY",
+        "FAMILIAR", "FAVORITE", "FESTIVAL", "FINANCIAL", "FLAGSHIP",
+        "FOOTBALL", "FORECAST", "FRAGMENT", "FUNCTION", "FURNITURE",
+        "GAMBLING", "GENEROUS", "GRADUATE", "GRAPHICS", "GRATITUDE",
+        "GUARDIAN", "GUIDANCE", "HAMBURGER", "HARDWARE", "HEADLINE",
+        "HERITAGE", "HIGHLAND", "HISTORIC", "HUMANITY", "IDENTICAL",
+        "IMPERIAL", "INCIDENT", "INDUSTRY", "INFERIOR", "INNOCENT",
+        "INSTANCE", "INSULTING", "INTEGRAL", "INVASION", "INVESTOR",
+        "JEALOUSY", "JUDGMENT", "KEYBOARD", "KNOWLEDGE", "LANGUAGE",
+        "LAUGHTER", "LEARNING", "LEVERAGE", "LIFESTYLE", "LIGHTNING",
+        "LITERARY", "LOCATION", "MAGAZINE", "MAGNETIC", "MAJORITY",
+        "MARATHON", "MARKETING", "MATERIAL", "MEDICINE", "MEMORIAL",
+        "MIDNIGHT", "MILITARY", "MINORITY", "MOMENTUM", "MOUNTAIN",
+        "NATIONAL", "NEGATIVE", "NEIGHBOR", "NEWSPAPER", "OBJECTIVE",
+        "OBSTACLE", "OFFERING", "OFFICIAL", "OPERATOR", "OPTIMISM",
+        "ORIGINAL", "OVERSIGHT", "PAINTING", "PARALLEL", "PARENTAL",
+        "PASSWORD", "PATIENCE", "PERIODIC", "PERSONAL", "PHYSICAL",
+        "PLANNING", "PLATFORM", "PLEASURE", "POLITICS", "PORTABLE",
+        "PORTRAIT", "POSITION", "POSITIVE", "POSSIBLE", "POTENTIAL",
+        "PRACTICE", "PRECIOUS", "PREGNANT", "PRESENCE", "PRESSURE",
+        "PREVIOUS", "PRINCESS", "PRIORITY", "PROGRESS", "PROPERTY",
+        "PROPOSAL", "PROTOCOL", "PROVINCE", "PSYCHIC", "PURCHASE",
+        "QUANTITY", "QUESTION", "RATIONAL", "REACTION", "RECEIVER",
+        "RECOVERY", "REGIONAL", "REGISTER", "RELATION", "RELATIVE",
+        "REMEMBER", "REPUBLIC", "RESEARCH", "RESOURCE", "RESPONSE",
+        "SANDWICH", "SCHEDULE", "SCIENTIST", "SEASONAL", "SECURITY",
+        "SENTENCE", "SEPARATE", "SEQUENCE", "SERGEANT", "SHIPPING",
+        "SHORTAGE", "SHOULDER", "SIMPLICITY", "SOLUTION", "SOMEWHAT",
+        "SOUTHERN", "SPECIALIST", "SPIRITUAL", "SPOKESMAN", "STANDARD",
+        "STRATEGY", "STRENGTH", "STRICTLY", "STRUCTURE", "STUDENT",
+        "SUBJECTIVE", "SUBMARINE", "SUBSTANCE", "SUBSTITUTE", "SUBURBAN",
+        "SUFFERING", "SUGGESTION", "SURROUND", "SURVIVAL", "SWIMMING",
+        "SYMPATHY", "SYNDROME", "TACTICAL", "TEACHING", "TECHNICAL",
+        "TEENAGER", "TELEPHONE", "TELESCOPE", "TERRIBLE", "TERRITORY",
+        "THINKING", "THOUSAND", "TOMORROW", "TRAINING", "TRIANGLE",
+        "TROPICAL", "ULTIMATE", "UMBRELLA", "UNIVERSE", "VACATION",
+        "VARIABLE", "VERTICAL", "VICTORIA", "VIOLENCE", "VOLATILE",
+        "WALLPAPER", "WAREHOUSE", "WARRANTY", "WEAKNESS", "WEATHER",
+        "WEDDING", "WEEKEND", "WILDLIFE", "WIRELESS", "WITHDRAW",
+        "WOODLAND", "WORKSHOP", "YOURSELF", "ZEPPELIN"
+    ];
+}
+
+// Hangman Game UI Manager
+class HangmanGameUI {
+    constructor() {
+        this.game = null;
+        this.modal = null;
+        this.wordDisplay = null;
+        this.keyboardContainer = null;
+        this.messageDisplay = null;
+        this.newGameBtn = null;
+        this.closeBtn = null;
+        this.init();
+    }
+    
+    init() {
+        this.modal = document.getElementById('hangman-modal');
+        this.wordDisplay = document.getElementById('hangman-word');
+        this.keyboardContainer = document.getElementById('hangman-keyboard');
+        this.messageDisplay = document.getElementById('hangman-message');
+        this.newGameBtn = document.getElementById('hangman-new-game');
+        this.closeBtn = document.getElementById('hangman-close');
+        
+        if (!this.modal) {
+            console.error('Hangman modal not found');
+            return;
+        }
+        
+        this.setupEventListeners();
+        this.createKeyboard();
+    }
+    
+    setupEventListeners() {
+        // New game button
+        if (this.newGameBtn) {
+            this.newGameBtn.addEventListener('click', () => this.startNewGame());
+        }
+        
+        // Close button
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', () => this.closeModal());
+        }
+        
+        // Close modal when clicking outside
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) {
+                this.closeModal();
+            }
+        });
+        
+        // Keyboard events
+        document.addEventListener('keydown', (e) => {
+            if (this.modal.classList.contains('active') && this.game && !this.game.isGameOver()) {
+                const key = e.key.toUpperCase();
+                if (/^[A-Z]$/.test(key)) {
+                    this.processGuess(key);
+                }
+            }
+        });
+        
+        // Escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+                this.closeModal();
+            }
+        });
+    }
+    
+    createKeyboard() {
+        if (!this.keyboardContainer) return;
+        
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const keyboard = document.createElement('div');
+        keyboard.classList.add('hangman-keyboard-layout');
+        
+        for (let letter of letters) {
+            const key = document.createElement('button');
+            key.classList.add('hangman-key');
+            key.textContent = letter;
+            key.dataset.letter = letter;
+            key.addEventListener('click', () => this.processGuess(letter));
+            keyboard.appendChild(key);
+        }
+        
+        this.keyboardContainer.appendChild(keyboard);
+    }
+    
+    openModal() {
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        this.startNewGame();
+    }
+    
+    closeModal() {
+        this.modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    startNewGame() {
+        this.game = new HangmanGame();
+        this.updateWordDisplay();
+        this.resetKeyboard();
+        this.resetHangmanFigure();
+        this.messageDisplay.textContent = 'Guess a letter to start!';
+        this.messageDisplay.classList.remove('hangman-message-win', 'hangman-message-lose');
+    }
+    
+    processGuess(letter) {
+        if (!this.game || this.game.isGameOver()) return;
+        
+        const correct = this.game.guess(letter);
+        this.updateWordDisplay();
+        this.updateKeyboard(letter, correct);
+        this.updateHangmanFigure();
+        
+        // Check if the game is over
+        if (this.game.isGameOver()) {
+            if (this.game.hasPlayerWon()) {
+                this.messageDisplay.textContent = 'Congratulations! You won! 🎉';
+                this.messageDisplay.classList.add('hangman-message-win');
+            } else {
+                this.messageDisplay.textContent = `Game over! The word was "${this.game.getWord()}" 😔`;
+                this.messageDisplay.classList.add('hangman-message-lose');
+            }
+        }
+    }
+    
+    updateWordDisplay() {
+        if (this.wordDisplay && this.game) {
+            this.wordDisplay.textContent = this.game.getWordState();
+        }
+    }
+    
+    updateKeyboard(letter, correct) {
+        const key = this.keyboardContainer.querySelector(`button[data-letter="${letter}"]`);
+        if (key) {
+            key.disabled = true;
+            if (correct) {
+                key.classList.add('hangman-key-correct');
+            } else {
+                key.classList.add('hangman-key-wrong');
+            }
+        }
+    }
+    
+    resetKeyboard() {
+        const keys = this.keyboardContainer.querySelectorAll('.hangman-key');
+        keys.forEach(key => {
+            key.disabled = false;
+            key.classList.remove('hangman-key-correct', 'hangman-key-wrong');
+        });
+    }
+    
+    updateHangmanFigure() {
+        if (!this.game) return;
+        
+        const wrongGuesses = this.game.getWrongGuesses();
+        const parts = [
+            document.getElementById('hangman-head'),
+            document.getElementById('hangman-body'),
+            document.getElementById('hangman-arm-left'),
+            document.getElementById('hangman-arm-right'),
+            document.getElementById('hangman-leg-left'),
+            document.getElementById('hangman-leg-right')
+        ];
+        
+        // Show the parts corresponding to the number of wrong guesses
+        for (let i = 0; i < parts.length; i++) {
+            if (parts[i]) {
+                if (i < wrongGuesses) {
+                    parts[i].classList.remove('hidden');
+                } else {
+                    parts[i].classList.add('hidden');
+                }
+            }
+        }
+    }
+    
+    resetHangmanFigure() {
+        const parts = document.querySelectorAll('#hangman-modal .hidden');
+        parts.forEach(part => {
+            part.classList.add('hidden');
+        });
+    }
+}
+
+

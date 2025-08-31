@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hangman Game - Interactive word-guessing game">
+    <meta name="theme-color" content="#004d99">
+    <title>Hangman Game - Abhishek Bakshi</title>
+
+    <!-- Base URL to resolve all relative URLs -->
+    <base href="/src/experiments/hangman/">
+
+    <!-- Consolidated CSS -->
+    <link rel="stylesheet" href="../../../src/styles/consolidated.css">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto+Mono&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Critical Scripts -->
+    <script src="../../../src/scripts/core/performance.js" type="module"></script>
+    <script src="../../../src/scripts/core/script.js" defer></script>
+    
+    <!-- Visual Effects -->
+    <script src="../../../src/scripts/visual-effects/background-network.js" defer></script>
+    <script src="../../../src/scripts/visual-effects/particles.js" defer></script>
+    <script src="../../../src/scripts/visual-effects/animations.js" defer></script>
+    <script src="../../../src/scripts/visual-effects/global-interactive.js" defer></script>
+    
+    <!-- Shared Components -->
+    <script src="../../../src/scripts/core/shared-components.js" defer></script>
+    
+    <!-- Game Scripts -->
+    <script src="scripts/hangman.js" defer></script>
+    <script src="scripts/hangman-ui.js" defer></script>
+    
+    <style>
+        body {
+            background-color: var(--bg-color, #121212);
+            color: var(--text-color, #ffffff);
+        }
+        
+        .hangman-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-gradient, linear-gradient(135deg, #121212 0%, #1e293b 100%));
+            position: relative;
+            z-index: 0;
+            overflow-y: auto;
+        }
+
+        /* Background elements - same style as main site */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: var(--text-color, #ffffff);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            z-index: 5;
+        }
+        
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Ensure visibility of UI elements */
+        .hangman-wrapper {
+            background-color: rgba(30, 41, 59, 0.2);
+            box-shadow: none;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        svg {
+            color: var(--text-color, #ffffff);
+        }
+
+        footer {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="hangman-page">
+    <!-- Background elements will be created by the scripts -->
+    
+    <a href="../../../index.html#ai-experiments" class="back-button glass">
+        <i class="fas fa-arrow-left"></i> Back to AI Experiments
+    </a>
+    
+    <div class="main-content">
+        <div id="hangman-game"></div>
+    </div>
+    
+    <footer class="glass"></footer>
+</body>
+</html> 

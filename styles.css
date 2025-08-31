@@ -1209,3 +1209,328 @@ body {
     }
 }
 
+/* Hangman Game Styles */
+.hangman-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.hangman-modal.active {
+    display: flex;
+}
+
+.hangman-container {
+    background: rgba(238, 229, 218, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    max-width: 1000px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-heavy);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.hangman-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hangman-header h2 {
+    color: var(--deep-charcoal);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hangman-rules {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hangman-rules h4 {
+    color: var(--deep-charcoal);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.hangman-rules ul {
+    list-style: none;
+    padding: 0;
+}
+
+.hangman-rules li {
+    color: var(--gray-dark);
+    margin-bottom: 0.3rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.hangman-rules li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+}
+
+.hangman-game-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.hangman-figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hangman-figure svg {
+    width: 150px;
+    height: 180px;
+    color: var(--deep-charcoal);
+}
+
+.hangman-figure .hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hangman-figure line,
+.hangman-figure circle {
+    transition: opacity 0.3s ease;
+}
+
+.hangman-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.hangman-word {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--deep-charcoal);
+    letter-spacing: 0.5rem;
+    font-family: 'Roboto Mono', monospace;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hangman-message {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--gray-dark);
+    min-height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hangman-message-win {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.hangman-message-lose {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.hangman-keyboard {
+    margin-bottom: 1.5rem;
+}
+
+.hangman-keyboard-layout {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.hangman-key {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 0.8rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--deep-charcoal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hangman-key:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.hangman-key:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.hangman-key-correct {
+    background: rgba(40, 167, 69, 0.3);
+    border-color: #28a745;
+    color: #28a745;
+}
+
+.hangman-key-wrong {
+    background: rgba(220, 53, 69, 0.3);
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.hangman-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.hangman-btn {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hangman-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.hangman-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--deep-charcoal);
+    transition: all 0.2s ease;
+}
+
+.hangman-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Responsive Design for Hangman */
+@media (max-width: 768px) {
+    .hangman-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .hangman-game-area {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .hangman-figure svg {
+        width: 120px;
+        height: 150px;
+    }
+    
+    .hangman-word {
+        font-size: 1.5rem;
+        letter-spacing: 0.3rem;
+    }
+    
+    .hangman-keyboard-layout {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.4rem;
+    }
+    
+    .hangman-key {
+        padding: 0.6rem 0.3rem;
+        font-size: 0.9rem;
+        min-width: 35px;
+        height: 35px;
+    }
+    
+    .hangman-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hangman-btn {
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hangman-container {
+        padding: 1rem;
+    }
+    
+    .hangman-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hangman-word {
+        font-size: 1.2rem;
+        letter-spacing: 0.2rem;
+    }
+    
+    .hangman-keyboard-layout {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    .hangman-key {
+        padding: 0.5rem 0.2rem;
+        font-size: 0.8rem;
+        min-width: 30px;
+        height: 30px;
+    }
+}
+
