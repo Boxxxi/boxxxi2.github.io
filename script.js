@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new ExperienceDial();
     
     // Add animation classes to elements
-    const animateElements = document.querySelectorAll('.section-header, .tech-item, .extra-card, .experience-item, .project-card');
+            const animateElements = document.querySelectorAll('.section-header, .tech-item, .extra-card, .experience-item, .project-card, .achievement-card');
     
     animateElements.forEach(el => {
         el.style.opacity = '0';
@@ -1072,5 +1072,49 @@ class HangmanGameUI {
         });
     }
 }
+
+// Achievements Card Flip Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const achievementCards = document.querySelectorAll('.achievement-card');
+    
+    achievementCards.forEach(card => {
+        card.addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+        
+        // Keyboard accessibility
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.classList.toggle('flipped');
+            }
+        });
+        
+        // Set tabindex for keyboard navigation
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', 'Click to flip achievement card');
+    });
+    
+    // Add entrance animations for achievement cards
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const achievementObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, observerOptions);
+    
+    achievementCards.forEach(card => {
+        achievementObserver.observe(card);
+    });
+    
+
+});
 
 
