@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-# Disallow dev/preview endpoints (none by default)
-
-Sitemap: https://guihubie.com/sitemap-index.xml
-

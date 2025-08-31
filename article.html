@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Article</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--light-almond);
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--deep-charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            color: var(--gray-medium);
+            font-size: 1rem;
+        }
+
+        .article-content {
+            line-height: 1.8;
+            color: var(--deep-charcoal);
+        }
+
+        .article-content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            color: var(--deep-charcoal);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--deep-charcoal);
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.25rem 0 0.75rem 0;
+            color: var(--deep-charcoal);
+        }
+
+        .article-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .article-content code {
+            background: var(--light-almond);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .article-content pre {
+            background: var(--deep-charcoal);
+            color: var(--light-almond);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .article-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--gradient-primary);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: var(--gray-dark);
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .article-content th,
+        .article-content td {
+            border: 1px solid var(--gray-medium);
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .article-content th {
+            background: var(--light-almond);
+            font-weight: 600;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray-medium);
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back to Portfolio
+    </a>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title" id="article-title">Loading...</h1>
+            <div class="article-meta" id="article-meta">Loading article...</div>
+        </div>
+        <div class="article-content" id="article-content">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading article content...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get article parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const articlePath = urlParams.get('article');
+
+        if (!articlePath) {
+            document.getElementById('article-content').innerHTML = `
+                <div class="loading">
+                    <h2>Article Not Found</h2>
+                    <p>No article specified. Please go back and select an article.</p>
+                </div>
+            `;
+        } else {
+            // Load the markdown file
+            fetch(articlePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Article not found');
+                    }
+                    return response.text();
+                })
+                .then(markdown => {
+                    // Convert markdown to HTML
+                    const html = marked.parse(markdown);
+                    
+                    // Extract title from first h1
+                    const titleMatch = markdown.match(/^# (.+)$/m);
+                    const title = titleMatch ? titleMatch[1] : 'Article';
+                    
+                    // Update page content
+                    document.getElementById('article-title').textContent = title;
+                    document.getElementById('article-meta').textContent = `Technical Article • ${new Date().toLocaleDateString()}`;
+                    document.getElementById('article-content').innerHTML = html;
+                    
+                    // Update page title
+                    document.title = title;
+                })
+                .catch(error => {
+                    console.error('Error loading article:', error);
+                    document.getElementById('article-content').innerHTML = `
+                        <div class="loading">
+                            <h2>Error Loading Article</h2>
+                            <p>The article could not be loaded. Please check the URL and try again.</p>
+                            <p>Error: ${error.message}</p>
+                        </div>
+                    `;
+                });
+        }
+    </script>
+</body>
+</html>

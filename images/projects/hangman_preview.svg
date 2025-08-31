@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250">
+    <rect width="400" height="250" fill="#1e293b" />
+    
+    <!-- Game Title -->
+    <text x="200" y="40" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" text-anchor="middle" font-weight="bold">Hangman Game</text>
+    
+    <!-- Hangman Figure -->
+    <g transform="translate(100, 80)">
+        <!-- Gallows -->
+        <line x1="20" y1="120" x2="120" y2="120" stroke-width="3" stroke="#ffffff" />
+        <line x1="40" y1="120" x2="40" y2="20" stroke-width="3" stroke="#ffffff" />
+        <line x1="40" y1="20" x2="100" y2="20" stroke-width="3" stroke="#ffffff" />
+        <line x1="100" y1="20" x2="100" y2="40" stroke-width="3" stroke="#ffffff" />
+        
+        <!-- Hangman -->
+        <circle cx="100" cy="55" r="15" stroke-width="3" stroke="#ffffff" fill="none" />
+        <line x1="100" y1="70" x2="100" y2="100" stroke-width="3" stroke="#ffffff" />
+        <line x1="100" y1="80" x2="80" y2="90" stroke-width="3" stroke="#ffffff" />
+        <line x1="100" y1="80" x2="120" y2="90" stroke-width="3" stroke="#ffffff" />
+        <line x1="100" y1="100" x2="80" y2="115" stroke-width="3" stroke="#ffffff" />
+        <line x1="100" y1="100" x2="120" y2="115" stroke-width="3" stroke="#ffffff" />
+    </g>
+    
+    <!-- Word Display -->
+    <g transform="translate(200, 150)">
+        <line x1="-80" y1="0" x2="-70" y2="0" stroke-width="3" stroke="#ffffff" />
+        <line x1="-60" y1="0" x2="-50" y2="0" stroke-width="3" stroke="#ffffff" />
+        <line x1="-40" y1="0" x2="-30" y2="0" stroke-width="3" stroke="#ffffff" />
+        <line x1="-20" y1="0" x2="-10" y2="0" stroke-width="3" stroke="#ffffff" />
+        <line x1="0" y1="0" x2="10" y2="0" stroke-width="3" stroke="#ffffff" />
+        <line x1="20" y1="0" x2="30" y2="0" stroke-width="3" stroke="#ffffff" />
+        <line x1="40" y1="0" x2="50" y2="0" stroke-width="3" stroke="#ffffff" />
+        <line x1="60" y1="0" x2="70" y2="0" stroke-width="3" stroke="#ffffff" />
+        
+        <!-- Some revealed letters -->
+        <text x="-75" y="-10" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">H</text>
+        <text x="-35" y="-10" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">N</text>
+        <text x="25" y="-10" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">M</text>
+    </g>
+    
+    <!-- Keyboard Representation -->
+    <g transform="translate(200, 200)">
+        <rect x="-150" y="0" width="300" height="30" rx="5" fill="#4a5568" />
+        <text x="0" y="20" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</text>
+    </g>
+</svg> 
