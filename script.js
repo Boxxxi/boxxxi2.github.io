@@ -204,6 +204,12 @@ class ExperienceDial {
     }
 
     updateContent(year) {
+        // Security: Validate year input
+        if (typeof year !== 'number' || year < 1900 || year > 2100) {
+            console.error('Invalid year provided:', year);
+            return;
+        }
+        
         const experiences = this.getExperienceData(year);
     
         // Clear previous content
@@ -214,11 +220,18 @@ class ExperienceDial {
             experiences.forEach(content => {
                 const experienceElement = document.createElement('div');
                 experienceElement.className = 'experience-item';
+                
+                // Security: Sanitize content before insertion
+                const sanitizedTitle = this.sanitizeHtml(content.title || '');
+                const sanitizedCompany = this.sanitizeHtml(content.company || '');
+                const sanitizedPeriod = this.sanitizeHtml(content.period || '');
+                const sanitizedDescription = this.sanitizeHtml(content.description || '');
+                
                 experienceElement.innerHTML = `
-                    <h3>${content.title}</h3>
-                    <div class="company">${content.company}</div>
-                    <div class="period">${content.period}</div>
-                    <div class="description">${content.description}</div>
+                    <h3>${sanitizedTitle}</h3>
+                    <div class="company">${sanitizedCompany}</div>
+                    <div class="period">${sanitizedPeriod}</div>
+                    <div class="description">${sanitizedDescription}</div>
                 `;
                 this.contentContainer.appendChild(experienceElement);
             
@@ -231,13 +244,28 @@ class ExperienceDial {
             });
         } else {
             // Single experience
+            // Security: Sanitize content before insertion
+            const sanitizedTitle = this.sanitizeHtml(experiences.title || '');
+            const sanitizedCompany = this.sanitizeHtml(experiences.company || '');
+            const sanitizedPeriod = this.sanitizeHtml(experiences.period || '');
+            const sanitizedDescription = this.sanitizeHtml(experiences.description || '');
+            
             this.contentContainer.innerHTML = `
-                <h3>${experiences.title}</h3>
-                <div class="company">${experiences.company}</div>
-                <div class="period">${experiences.period}</div>
-                <div class="description">${experiences.description}</div>
+                <h3>${sanitizedTitle}</h3>
+                <div class="company">${sanitizedCompany}</div>
+                <div class="period">${sanitizedPeriod}</div>
+                <div class="description">${sanitizedDescription}</div>
             `;
         }
+    }
+    
+    // Security: HTML sanitization helper
+    sanitizeHtml(str) {
+        if (typeof str !== 'string') return '';
+        return str.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                  .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+                  .replace(/javascript:/gi, '')
+                  .replace(/on\w+\s*=/gi, '');
     }
 
     getExperienceData(year) {
@@ -426,14 +454,27 @@ document.head.appendChild(style);
 
 // Form validation (for future contact form)
 function validateForm(form) {
+    // Security: Validate form parameter
+    if (!form || !(form instanceof HTMLFormElement)) {
+        console.error('Invalid form element provided');
+        return false;
+    }
+    
     const inputs = form.querySelectorAll('input[required], textarea[required]');
     let isValid = true;
     
     inputs.forEach(input => {
-        if (!input.value.trim()) {
+        // Security: Basic input sanitization
+        const value = input.value.trim();
+        if (!value) {
             input.classList.add('error');
             isValid = false;
         } else {
+            // Security: Remove potentially dangerous content
+            const sanitizedValue = value.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                                       .replace(/javascript:/gi, '')
+                                       .replace(/on\w+\s*=/gi, '');
+            input.value = sanitizedValue;
             input.classList.remove('error');
         }
     });
@@ -553,13 +594,24 @@ class GalleryLightbox {
     }
     
     updateImage() {
+        // Security: Validate currentIndex
+        if (this.currentIndex < 0 || this.currentIndex >= this.images.length) {
+            console.error('Invalid image index:', this.currentIndex);
+            return;
+        }
+        
         const img = this.images[this.currentIndex];
         const lightboxImg = this.lightbox.querySelector('.lightbox-image');
         const caption = this.lightbox.querySelector('.lightbox-caption');
         
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-        caption.textContent = img.alt;
+        // Security: Validate image source
+        if (img && img.src && img.src.startsWith('images/')) {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt || '';
+            caption.textContent = img.alt || '';
+        } else {
+            console.error('Invalid image source:', img?.src);
+        }
     }
 }
 

@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
     <title>Project Article</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" crossorigin="anonymous"></script>
     <style>
         .article-container {
             max-width: 800px;
@@ -196,11 +204,19 @@
         const urlParams = new URLSearchParams(window.location.search);
         const articlePath = urlParams.get('article');
 
-        if (!articlePath) {
+        // Security: Whitelist of allowed articles to prevent directory traversal
+        const allowedArticles = [
+            'articles/auto-regexify.md',
+            'articles/entity-labelling.md',
+            'articles/merchant-categorization.md',
+            'articles/sms-classification.md'
+        ];
+
+        if (!articlePath || !allowedArticles.includes(articlePath)) {
             document.getElementById('article-content').innerHTML = `
                 <div class="loading">
                     <h2>Article Not Found</h2>
-                    <p>No article specified. Please go back and select an article.</p>
+                    <p>No article specified or invalid article path. Please go back and select an article.</p>
                 </div>
             `;
         } else {
@@ -220,12 +236,19 @@
                     const titleMatch = markdown.match(/^# (.+)$/m);
                     const title = titleMatch ? titleMatch[1] : 'Article';
                     
-                    // Update page content
+                    // Security: Use textContent for title to prevent XSS
                     document.getElementById('article-title').textContent = title;
                     document.getElementById('article-meta').textContent = `Technical Article • ${new Date().toLocaleDateString()}`;
-                    document.getElementById('article-content').innerHTML = html;
                     
-                    // Update page title
+                    // Security: Basic XSS protection - only allow safe HTML tags
+                    const sanitizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                                             .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+                                             .replace(/javascript:/gi, '')
+                                             .replace(/on\w+\s*=/gi, '');
+                    
+                    document.getElementById('article-content').innerHTML = sanitizedHtml;
+                    
+                    // Update page title safely
                     document.title = title;
                 })
                 .catch(error => {
