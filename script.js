@@ -15,6 +15,29 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
     });
 });
 
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+});
+
+// Prevent body scroll when mobile menu is open
+function toggleBodyScroll(disable) {
+    if (disable) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+// Update mobile menu to handle body scroll
+hamburger.addEventListener('click', () => {
+    const isActive = hamburger.classList.contains('active');
+    toggleBodyScroll(isActive);
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -138,6 +161,13 @@ class ExperienceDial {
         const markers = document.querySelectorAll('.year-marker');
         markers.forEach(marker => {
             marker.addEventListener('click', () => {
+                const year = parseInt(marker.dataset.year);
+                this.updateDial(year);
+            });
+            
+            // Add touch events for mobile
+            marker.addEventListener('touchstart', (e) => {
+                e.preventDefault();
                 const year = parseInt(marker.dataset.year);
                 this.updateDial(year);
             });
@@ -273,13 +303,13 @@ class ExperienceDial {
             2025: {
                 title: "MS in Data Science",
                 company: "New York University (NYU)",
-                period: "January 2025 - Present",
+                period: "August 2025 - Present",
                 description: `<ul><li>Pursuing Master of Science in Data Science with Industry concentration</li><li>Focusing on advanced machine learning, statistical modeling, and data engineering</li><li>Engaging in cutting-edge research and industry collaborations</li></ul>`
             },
             2024: {
                 title: "Senior Data Scientist",
                 company: "FinBox.in",
-                period: "August 2024 - Present",
+                period: "August 2024 - July 2025",
                 description: `<ul><li>Built an AI-driven automated data extraction system, replacing manual processes and reducing workload while upskilling teams for strategic roles.</li><li>Developed a regex automation pipeline enhanced with generative AI, boosting data extraction accuracy from 71% to 93% and cutting manual effort by 70%.</li><li>Designed high-accuracy LSTM-based hierarchical classifiers, improving categorization accuracy by 34% with reinforcement learning for continuous enhancements.</li><li>Established SOPs and best practices, ensuring consistent, scalable, and high-quality data solutions across teams.</li></ul>`
             },
             2021: {
@@ -391,17 +421,36 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Tech stack hover pause
+// Tech stack hover pause (desktop only)
 const techSlider = document.querySelector('.tech-track');
 if (techSlider) {
-    techSlider.addEventListener('mouseenter', () => {
-        techSlider.style.animationPlayState = 'paused';
-    });
+    // Only add hover pause on desktop
+    if (window.innerWidth > 768) {
+        techSlider.addEventListener('mouseenter', () => {
+            techSlider.style.animationPlayState = 'paused';
+        });
+        
+        techSlider.addEventListener('mouseleave', () => {
+            techSlider.style.animationPlayState = 'running';
+        });
+    }
     
-    techSlider.addEventListener('mouseleave', () => {
-        techSlider.style.animationPlayState = 'running';
-    });
+    // Pause animation on mobile
+    if (window.innerWidth <= 768) {
+        techSlider.style.animationPlayState = 'paused';
+    }
 }
+
+// Handle window resize for tech stack
+window.addEventListener('resize', () => {
+    if (techSlider) {
+        if (window.innerWidth <= 768) {
+            techSlider.style.animationPlayState = 'paused';
+        } else {
+            techSlider.style.animationPlayState = 'running';
+        }
+    }
+});
 
 // Button click effects
 document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
@@ -1082,6 +1131,12 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.toggle('flipped');
         });
         
+        // Touch events for mobile
+        card.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.classList.toggle('flipped');
+        });
+        
         // Keyboard accessibility
         card.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -1114,7 +1169,11 @@ document.addEventListener('DOMContentLoaded', function() {
         achievementObserver.observe(card);
     });
     
-
+    // Pause achievements animation on mobile
+    const achievementsTrack = document.querySelector('.achievements-track');
+    if (achievementsTrack && window.innerWidth <= 768) {
+        achievementsTrack.style.animationPlayState = 'paused';
+    }
 });
 
 

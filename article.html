@@ -17,11 +17,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" crossorigin="anonymous"></script>
     <style>
+        body {
+            background: var(--white);
+        }
+        
         .article-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
-            background: var(--white);
+            background: var(--light-almond);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-light);
             margin-top: 2rem;
@@ -166,18 +170,122 @@
         @media (max-width: 768px) {
             .article-container {
                 margin: 1rem;
-                padding: 1rem;
+                padding: 1.5rem;
+                border-radius: 8px;
             }
 
             .article-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                line-height: 1.2;
+            }
+
+            .article-header {
+                margin-bottom: 2rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .article-content {
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+
+            .article-content h1 {
+                font-size: 1.6rem;
+                margin: 1.5rem 0 0.8rem 0;
+            }
+
+            .article-content h2 {
+                font-size: 1.3rem;
+                margin: 1.2rem 0 0.7rem 0;
+            }
+
+            .article-content h3 {
+                font-size: 1.1rem;
+                margin: 1rem 0 0.6rem 0;
+            }
+
+            .article-content p {
+                margin-bottom: 0.8rem;
+            }
+
+            .article-content code {
+                font-size: 0.85rem;
+                padding: 0.15rem 0.3rem;
+            }
+
+            .article-content pre {
+                padding: 0.8rem;
+                font-size: 0.85rem;
+                margin: 0.8rem 0;
+            }
+
+            .article-content ul,
+            .article-content ol {
+                margin: 0.8rem 0;
+                padding-left: 1.5rem;
+            }
+
+            .article-content li {
+                margin-bottom: 0.4rem;
+            }
+
+            .article-content table {
+                font-size: 0.85rem;
+            }
+
+            .article-content th,
+            .article-content td {
+                padding: 0.4rem;
             }
 
             .back-button {
                 top: 1rem;
                 left: 1rem;
-                padding: 0.5rem 1rem;
+                padding: 0.6rem 1.2rem;
                 font-size: 0.9rem;
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .loading {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-container {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 1.6rem;
+            }
+
+            .article-content {
+                font-size: 0.9rem;
+            }
+
+            .article-content h1 {
+                font-size: 1.4rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.2rem;
+            }
+
+            .article-content h3 {
+                font-size: 1rem;
+            }
+
+            .back-button {
+                top: 0.8rem;
+                left: 0.8rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
             }
         }
     </style>
