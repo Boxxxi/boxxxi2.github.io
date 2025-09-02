@@ -521,6 +521,37 @@ body {
     }
 }
 
+@keyframes gallery-scroll {
+    0% {
+        transform: translateX(10%);
+    }
+    100% {
+        transform: translateX(-90%);
+    }
+}
+
+@keyframes gallery-scroll-reverse {
+    0% {
+        transform: translateX(-90%);
+    }
+    100% {
+        transform: translateX(10%);
+    }
+}
+
+/* Specific gallery section animations */
+#photography-gallery .gallery-track {
+    animation: gallery-scroll 30s linear infinite;
+}
+
+#origami-gallery .gallery-track {
+    animation: gallery-scroll-reverse 35s linear infinite;
+}
+
+#art-gallery .gallery-track {
+    animation: gallery-scroll 40s linear infinite;
+}
+
 /* Mobile Tech Stack */
 @media (max-width: 768px) {
     .tech-slider {
@@ -1626,32 +1657,57 @@ body {
     color: #667eea;
 }
 
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+.gallery-slider {
+    overflow: hidden;
+    position: relative;
+    padding: 2rem 0;
     margin-bottom: 2rem;
 }
 
-/* Mobile Gallery Grid */
+.gallery-track {
+    display: flex;
+    animation: gallery-scroll 25s linear infinite;
+    width: max-content;
+}
+
+.gallery-item {
+    margin: 0 1rem;
+    min-width: 250px;
+    max-width: 300px;
+    flex-shrink: 0;
+    aspect-ratio: 4/3;
+}
+
+/* Mobile Gallery */
 @media (max-width: 768px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
+    .gallery-slider {
+        padding: 1.5rem 0;
     }
-    
+
+    .gallery-track {
+        animation: none;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
     .gallery-item {
         aspect-ratio: 3/2;
+        margin: 0;
+        min-width: 200px;
+        flex: 0 0 calc(50% - 1rem);
+        max-width: 250px;
     }
-    
+
     .gallery-overlay {
         padding: 1rem 0.8rem 0.8rem;
     }
-    
+
     .gallery-overlay span {
         font-size: 0.85rem;
     }
-    
+
     .gallery-category {
         font-size: 1.3rem;
         margin-bottom: 1.5rem;
@@ -1659,23 +1715,25 @@ body {
 }
 
 @media (max-width: 480px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .gallery-track {
         gap: 0.8rem;
     }
-    
+
     .gallery-item {
         aspect-ratio: 4/3;
+        min-width: 180px;
+        flex: 0 0 calc(50% - 0.8rem);
+        max-width: 220px;
     }
-    
+
     .gallery-overlay {
         padding: 0.8rem 0.6rem 0.6rem;
     }
-    
+
     .gallery-overlay span {
         font-size: 0.8rem;
     }
-    
+
     .gallery-category {
         font-size: 1.2rem;
         margin-bottom: 1rem;
@@ -1689,6 +1747,7 @@ body {
     box-shadow: var(--shadow-light);
     transition: var(--transition);
     aspect-ratio: 4/3;
+    /* Remove margin from here since it's handled in the slider context */
 }
 
 .gallery-item:hover {

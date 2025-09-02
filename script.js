@@ -654,12 +654,18 @@ class GalleryLightbox {
         const caption = this.lightbox.querySelector('.lightbox-caption');
         
         // Security: Validate image source
-        if (img && img.src && img.src.startsWith('images/')) {
-            lightboxImg.src = img.src;
-            lightboxImg.alt = img.alt || '';
-            caption.textContent = img.alt || '';
+        if (img && img.src) {
+            // Use the original src attribute instead of the resolved src property
+            const originalSrc = img.getAttribute('src');
+            if (originalSrc && originalSrc.startsWith('images/')) {
+                lightboxImg.src = originalSrc;
+                lightboxImg.alt = img.alt || '';
+                caption.textContent = img.alt || '';
+            } else {
+                console.error('Invalid image source:', originalSrc);
+            }
         } else {
-            console.error('Invalid image source:', img?.src);
+            console.error('No image found at index:', this.currentIndex);
         }
     }
 }
