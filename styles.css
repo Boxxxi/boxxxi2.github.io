@@ -1678,14 +1678,14 @@ body {
     aspect-ratio: 4/3;
 }
 
-/* Mobile Gallery */
-@media (max-width: 768px) {
+/* Tablet and Mobile Gallery - Disable animation */
+@media (max-width: 1024px) {
     .gallery-slider {
         padding: 1.5rem 0;
     }
 
     .gallery-track {
-        animation: none;
+        animation: none !important;
         flex-wrap: wrap;
         justify-content: center;
         gap: 1rem;
@@ -1714,8 +1714,21 @@ body {
     }
 }
 
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+    .gallery-track {
+        animation: none !important;
+    }
+
+    .gallery-item {
+        flex: 0 0 calc(33.333% - 0.8rem);
+        max-width: 200px;
+    }
+}
+
 @media (max-width: 480px) {
     .gallery-track {
+        animation: none !important;
         gap: 0.8rem;
     }
 
