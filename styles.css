@@ -467,7 +467,7 @@ body {
 
 .tech-track {
     display: flex;
-    animation: scroll 30s linear infinite;
+    animation: scroll 20s linear infinite;
     width: max-content;
 }
 
@@ -475,38 +475,49 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin: 0 2rem;
     padding: 1.5rem;
-    background: var(--light-almond);
+    background: transparent;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow-light);
     transition: var(--transition);
-    min-width: 120px;
+    min-width: 150px;
+    min-height: 100px;
 }
 
 .tech-item:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-medium);
+    box-shadow: none;
 }
 
-.tech-item i {
-    font-size: 2.5rem;
+
+
+.tech-item .tech-icon {
+    width: 8rem;
+    height: 8rem;
     margin-bottom: 0.5rem;
-    color: var(--deep-charcoal);
+    object-fit: contain;
+    /* vertical-align: middle; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tech-item span {
     font-weight: 600;
     color: var(--deep-charcoal);
     text-align: center;
+    font-size: 0.9rem;
 }
+
+
 
 @keyframes scroll {
     0% {
-        transform: translateX(0);
+        transform: translateX(10%);
     }
     100% {
-        transform: translateX(-50%);
+        transform: translateX(-90%);
     }
 }
 
@@ -530,15 +541,18 @@ body {
         padding: 1rem;
         flex: 0 0 calc(33.333% - 1rem);
         max-width: 120px;
+        background: transparent;
+        box-shadow: none;
     }
     
-    .tech-item i {
-        font-size: 2rem;
+
+    
+    .tech-item .tech-icon {
+        width: 4rem;
+        height: 4rem;
     }
     
-    .tech-item span {
-        font-size: 0.9rem;
-    }
+
 }
 
 @media (max-width: 480px) {
@@ -547,13 +561,14 @@ body {
         max-width: 100px;
     }
     
-    .tech-item i {
-        font-size: 1.8rem;
+
+    
+    .tech-item .tech-icon {
+        width: 3.6rem;
+        height: 3.6rem;
     }
     
-    .tech-item span {
-        font-size: 0.8rem;
-    }
+
 }
 
 @keyframes scroll-achievements {
