@@ -234,18 +234,18 @@ noise_ratio = 28%
 
 ### Sample of Final Cluster Wordclouds
 
-> Note: The wordcloud images shown below are placeholders. You'll need to add your actual wordcloud images to the `./src/assets/images/merchant-categorization/` directory for them to display properly.
+<!-- > Wordcloud images shown below are stored in `images/projects/merchant-categorization/` and are referenced from this article via `images/...` paths. -->
 
 <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
-    <img src="./src/assets/images/projects/merchant-categorization/Cluster_wordcloud2.png" width="30%" alt="Wordcloud Cluster 1"/>
-    <img src="./src/assets/images/projects/merchant-categorization/Cluster_wordcloud32.png" width="30%" alt="Wordcloud Cluster 2"/>
-    <img src="./src/assets/images/projects/merchant-categorization/Cluster_wordcloud25.png" width="30%" alt="Wordcloud Cluster 3"/>
+    <img src="images/projects/merchant-categorization/Cluster_wordcloud2.png" width="30%" alt="Wordcloud Cluster 1"/>
+    <img src="images/projects/merchant-categorization/Cluster_wordcloud32.png" width="30%" alt="Wordcloud Cluster 2"/>
+    <img src="images/projects/merchant-categorization/Cluster_wordcloud25.png" width="30%" alt="Wordcloud Cluster 3"/>
 </div>
 
 <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
-    <img src="./src/assets/images/projects/merchant-categorization/Cluster_wordcloud19.png" width="30%" alt="Wordcloud Cluster 4"/>
-    <img src="./src/assets/images/projects/merchant-categorization/Cluster_wordcloud22.png" width="30%" alt="Wordcloud Cluster 5"/>
-    <img src="./src/assets/images/projects/merchant-categorization/Cluster_wordcloud23.png" width="30%" alt="Wordcloud Cluster 6"/>
+    <img src="images/projects/merchant-categorization/Cluster_wordcloud19.png" width="30%" alt="Wordcloud Cluster 4"/>
+    <img src="images/projects/merchant-categorization/Cluster_wordcloud22.png" width="30%" alt="Wordcloud Cluster 5"/>
+    <img src="images/projects/merchant-categorization/Cluster_wordcloud23.png" width="30%" alt="Wordcloud Cluster 6"/>
 </div>
 
 ## Conclusion
@@ -255,3 +255,4 @@ The low **purity** and **silhouette** scores indicate presence of high impurity 
 The silver lining here is that the **WordClouds** show that clusters are interpretable. For improvement, clusters created on impurities can be used to systematically remove such data and clean input data for next iteration.
 
 By following this approach, you can effectively categorize merchants using NLP and clustering techniques. This methodology facilitates better data organization, enhances analytical capabilities, and supports strategic decision-making in financial and e-commerce applications.
+
