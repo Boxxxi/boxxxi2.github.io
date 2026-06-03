@@ -55,9 +55,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Experience Dial Functionality
 class ExperienceDial {
     constructor() {
-        this.currentYear = 2024;
+        this.currentYear = 2026;
         this.startYear = 2016;
-        this.endYear = 2025;
+        this.endYear = 2026;
         this.isDragging = false;
         this.startAngle = 0;
         this.currentAngle = 0;
@@ -279,13 +279,16 @@ class ExperienceDial {
             const sanitizedCompany = this.sanitizeHtml(experiences.company || '');
             const sanitizedPeriod = this.sanitizeHtml(experiences.period || '');
             const sanitizedDescription = this.sanitizeHtml(experiences.description || '');
-            
-            this.contentContainer.innerHTML = `
+
+            const experienceElement = document.createElement('div');
+            experienceElement.className = 'experience-item';
+            experienceElement.innerHTML = `
                 <h3>${sanitizedTitle}</h3>
                 <div class="company">${sanitizedCompany}</div>
                 <div class="period">${sanitizedPeriod}</div>
                 <div class="description">${sanitizedDescription}</div>
             `;
+            this.contentContainer.appendChild(experienceElement);
         }
     }
     
@@ -300,14 +303,28 @@ class ExperienceDial {
 
     getExperienceData(year) {
         const experiences = {
+            2026: [
+                {
+                    title: "Research Assistant",
+                    company: "LS Lab, NYU (Prof. Zhana Vrangalova)",
+                    period: "2026 - Present",
+                    description: `<ul><li>Identified and removed bots from survey responses through a hybrid manual and ML-based review pipeline across 620 survey response and metadata variables.</li><li>Applied CatBoost, KNN, and HDBSCAN to classify responses as human or bot-generated, handling both feature-based and density-based signals.</li></ul>`
+                },
+                {
+                    title: "MS in Data Science — Spring 2026",
+                    company: "New York University (NYU)",
+                    period: "January 2026 - May 2026",
+                    description: `<ul><li><strong>Computational Cognitive Modelling</strong>: Replicated Dezfouli et al. adversarial RL framework and extended it with TinyRNN phase portrait analysis, revealing attractor inversion as the geometric mechanism behind adversarial manipulation of human decision-making.</li><li><strong>Machine Learning</strong>: Competed in BirdCLEF+ 2026 — multi-label wildlife species identification from Pantanal soundscapes using EfficientNet SED backbones and iterative pseudo-labeling.</li><li><strong>Build with Google AI Hackathon</strong>: Built NYC StreetFix — a multimodal AI agent powered by Gemini 2.5 Flash for automated 311 complaint filing across 17 languages via photo, voice, or text.</li></ul>`
+                }
+            ],
             2025: {
-                title: "MS in Data Science",
+                title: "MS in Data Science — Fall 2025",
                 company: "New York University (NYU)",
                 period: "August 2025 - Present",
-                description: `<ul><li>Pursuing Master of Science in Data Science with Industry concentration</li><li>Focusing on advanced machine learning, statistical modeling, and data engineering</li><li>Engaging in cutting-edge research and industry collaborations</li></ul>`
+                description: `<ul><li>Pursuing Master of Science in Data Science with Industry concentration.</li><li><strong>Computer Vision</strong>: Built PhysVideoGenerator — a physics-aware text-to-video framework extending the Latte Latent Diffusion Transformer with physics-informed training objectives, evaluated using FID, SSIM, PSNR, and LPIPS.</li><li>Focusing on advanced machine learning, statistical modeling, and data engineering.</li></ul>`
             },
             2024: {
-                title: "Senior Data Scientist",
+                title: "Data Scientist II",
                 company: "FinBox.in",
                 period: "August 2024 - July 2025",
                 description: `<ul><li>Built an AI-driven automated data extraction system, replacing manual processes and reducing workload while upskilling teams for strategic roles.</li><li>Developed a regex automation pipeline enhanced with generative AI, boosting data extraction accuracy from 71% to 93% and cutting manual effort by 70%.</li><li>Designed high-accuracy LSTM-based hierarchical classifiers, improving categorization accuracy by 34% with reinforcement learning for continuous enhancements.</li><li>Established SOPs and best practices, ensuring consistent, scalable, and high-quality data solutions across teams.</li></ul>`
