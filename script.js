@@ -378,16 +378,11 @@ class ExperienceDial {
     }
 }
 
-// Navbar scroll effect
+// Navbar scroll effect — toggle the .scrolled class; styling lives in CSS
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(238, 229, 218, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(238, 229, 218, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
+    if (!navbar) return;
+    navbar.classList.toggle('scrolled', window.scrollY > 100);
 });
 
 // Intersection Observer for animations
@@ -1199,4 +1194,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Cursor-tracking spotlight — updates --cursor-x / --cursor-y on hero and project cards
+(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.addEventListener('pointermove', (e) => {
+            const rect = hero.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            hero.style.setProperty('--cursor-x', `${x}%`);
+            hero.style.setProperty('--cursor-y', `${y}%`);
+        });
+    }
+
+    document.querySelectorAll('.project-card').forEach((card) => {
+        card.addEventListener('pointermove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--cursor-x', `${x}%`);
+            card.style.setProperty('--cursor-y', `${y}%`);
+        });
+    });
+})();
 
