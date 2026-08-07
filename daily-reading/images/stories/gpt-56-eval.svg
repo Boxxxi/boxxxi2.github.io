@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">GPT-5.6 benchmark signal audit</title>
+  <desc id="desc">A technical graphic showing roughly seventy percent usable benchmark signal and thirty percent broken tasks.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111b"/><stop offset="1" stop-color="#020406"/></linearGradient>
+    <linearGradient id="signal" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6ee7b7"/><stop offset="1" stop-color="#7dd3fc"/></linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#7dd3fc" stroke-opacity=".08"/></pattern>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg)"/><rect width="1200" height="600" fill="url(#grid)"/>
+  <text x="72" y="94" fill="#6ee7b7" font-family="ui-monospace,monospace" font-size="22" letter-spacing="5">BENCHMARK AUDIT</text>
+  <text x="72" y="190" fill="#f1f7fa" font-family="Georgia,serif" font-size="94">GPT-5.6</text>
+  <text x="76" y="238" fill="#9aa8b5" font-family="Arial,sans-serif" font-size="25">Capability is only useful when the evaluation signal is trustworthy.</text>
+  <rect x="72" y="322" width="1056" height="82" rx="18" fill="#0c1721" stroke="#7dd3fc" stroke-opacity=".22"/>
+  <rect x="72" y="322" width="739" height="82" rx="18" fill="url(#signal)"/>
+  <path d="M811 322H1128V404H811Z" fill="#a78bfa" fill-opacity=".34"/>
+  <text x="102" y="374" fill="#02100c" font-family="ui-monospace,monospace" font-size="25" font-weight="700">~70% USABLE SIGNAL</text>
+  <text x="842" y="374" fill="#eee9ff" font-family="ui-monospace,monospace" font-size="23" font-weight="700">~30% BROKEN</text>
+  <text x="72" y="486" fill="#7dd3fc" font-family="ui-monospace,monospace" font-size="18" letter-spacing="2">SWE-BENCH PRO · AGENT-ASSISTED TASK AUDIT</text>
+  <text x="72" y="532" fill="#71808e" font-family="Arial,sans-serif" font-size="19">Read the benchmark quality alongside the headline model scores.</text>
+</svg>
