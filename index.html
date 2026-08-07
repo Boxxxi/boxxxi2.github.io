@@ -12,11 +12,22 @@
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     
     <title>Portfolio - Creative Developer and Data Scientist</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=space-mission-6">
+    <!-- Reversible post-Experience space theme: remove this line and space-sections.js to restore the previous design. -->
+    <link rel="stylesheet" href="space-sections.css?v=13">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
+    <!-- Atmosphere: aurora nebulae + grain -->
+    <div class="atmosphere" aria-hidden="true">
+        <div class="nebula"></div>
+        <div class="grain"></div>
+        <div class="vignette"></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -29,6 +40,7 @@
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#achievements">Achievements</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#daily-reading">Daily Reading</a></li>
                 <li><a href="#extras">Extras</a></li>
             </ul>
             <div class="hamburger">
@@ -45,7 +57,7 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-title">
-                        HI, I'M <span class="gradient-text">ABHISHEK</span>
+                        Hi, I’m <span class="gradient-text">Abhishek</span>
                     </h1>
                     <p class="hero-subtitle typewriter">
                         NYU MS Data Science Student | Deep Learning Enthusiast
@@ -87,6 +99,14 @@
                 <p>Technologies I've worked with and mastered over the years</p>
             </div>
             <div class="tech-slider">
+                <div class="solar-core" aria-hidden="true">
+                    <span>TECH</span>
+                    <strong>STACK</strong>
+                </div>
+                <div class="solar-orbit-ring solar-orbit-ring-1" aria-hidden="true"></div>
+                <div class="solar-orbit-ring solar-orbit-ring-2" aria-hidden="true"></div>
+                <div class="solar-orbit-ring solar-orbit-ring-3" aria-hidden="true"></div>
+                <div class="solar-orbit-ring solar-orbit-ring-4" aria-hidden="true"></div>
                 <div class="tech-track">
                     <!-- First set of icons -->
                     <div class="tech-item">
@@ -663,11 +683,56 @@
         </div>
     </section>
 
+    <!-- Daily Reading Section -->
+    <section id="daily-reading" class="daily-reading">
+        <div class="container">
+            <div class="section-header daily-reading-header">
+                <div>
+                    <span class="daily-reading-kicker">PERSONAL INTELLIGENCE BRIEF · UPDATED DAILY</span>
+                    <h2>Daily <span class="gradient-text">Reading</span></h2>
+                    <p>A high-signal feed I built to track the ideas, people and events I care about.</p>
+                </div>
+                <span class="daily-reading-status"><i></i> Fresh every morning · 7:00 AM ET</span>
+            </div>
+
+            <a class="daily-reading-card" href="daily-reading/">
+                <div class="daily-reading-copy">
+                    <div class="reading-labels">
+                        <span>ROBOTICS</span>
+                        <span>AI</span>
+                        <span>NYC</span>
+                        <span>HACKATHONS</span>
+                    </div>
+                    <h3>The FeedINeed</h3>
+                    <p>Robotics and embodied AI first, then substantive model releases, nearby hackathons, NYC events, smart genre films and veteran-viewer anime—filtered for signal, not hype.</p>
+                    <div class="reading-cta">
+                        <span>Open today's feed</span>
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </div>
+                </div>
+                <div class="daily-reading-orbit" aria-hidden="true">
+                    <span class="orbit-ring orbit-ring-one"></span>
+                    <span class="orbit-ring orbit-ring-two"></span>
+                    <span class="orbit-core"><i class="fas fa-satellite-dish"></i></span>
+                    <span class="orbit-node node-robot"><i class="fas fa-robot"></i></span>
+                    <span class="orbit-node node-code"><i class="fas fa-code"></i></span>
+                    <span class="orbit-node node-city"><i class="fas fa-city"></i></span>
+                </div>
+            </a>
+
+            <div class="daily-reading-notes">
+                <span><b>01</b> Personalized ranking learns from “more” and “less” feedback</span>
+                <span><b>02</b> Near-term events and hackathons are marked urgent</span>
+                <span><b>03</b> Primary sources and deeper analysis stay one click away</span>
+            </div>
+        </div>
+    </section>
+
     <!-- Extras Section -->
     <section id="extras" class="extras">
         <div class="container">
             <div class="section-header">
-                <h2>Beyond Code</h2>
+                <h2>Beyond <span class="gradient-text">Code</span></h2>
                 <p>Exploring creativity through various mediums</p>
             </div>
             <div class="extras-grid">
@@ -1112,6 +1177,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=space-mission-8"></script>
+    <script src="space-sections.js?v=5"></script>
 </body>
 </html>

@@ -52,7 +52,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Experience Dial Functionality
+// Experience Mission Timeline
 class ExperienceDial {
     constructor() {
         this.currentYear = 2026;
@@ -61,6 +61,7 @@ class ExperienceDial {
         this.isDragging = false;
         this.startAngle = 0;
         this.currentAngle = 0;
+        this.rocketProgress = 1;
         this.init();
     }
 
@@ -68,30 +69,45 @@ class ExperienceDial {
         this.createDialStructure();
         this.setupEventListeners();
         this.updateDial(this.currentYear);
+        this.startAutoAdvance();
     }
 
     createDialStructure() {
         const timeline = document.querySelector('.experience-timeline');
         if (!timeline) return;
 
-        // Create content wrapper
         const contentWrapper = document.createElement('div');
-        contentWrapper.className = 'experience-content-wrapper';
+        contentWrapper.className = 'mission-timeline-shell';
 
-        // Create dial container
-        const dialContainer = document.createElement('div');
-        dialContainer.className = 'dial-container glass';
+        const route = document.createElement('div');
+        route.className = 'mission-route';
+        route.setAttribute('aria-label', 'Experience timeline from 2016 to 2026');
 
-        // Create dial
-        const dial = document.createElement('div');
-        dial.className = 'dial';
-        dialContainer.appendChild(dial);
+        const routeLine = document.createElement('div');
+        routeLine.className = 'mission-route-line';
 
-        // Create year markers
+        const routeGraphic = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        routeGraphic.classList.add('mission-route-svg');
+        routeGraphic.setAttribute('viewBox', '0 0 1000 80');
+        routeGraphic.setAttribute('preserveAspectRatio', 'none');
+        routeGraphic.setAttribute('aria-hidden', 'true');
+        routeGraphic.innerHTML = `
+            <path class="mission-route-base" d="M0 40 C90 14 170 14 250 40 C330 66 420 66 500 40 C580 14 670 14 750 40 C830 66 920 66 1000 40" pathLength="100"></path>
+            <path class="mission-route-progress" d="M0 40 C90 14 170 14 250 40 C330 66 420 66 500 40 C580 14 670 14 750 40 C830 66 920 66 1000 40" pathLength="100"></path>
+        `;
+        routeLine.appendChild(routeGraphic);
+        this.routePath = routeGraphic.querySelector('.mission-route-base');
+        const routeProgress = routeGraphic.querySelector('.mission-route-progress');
+
+        const rocket = document.createElement('div');
+        rocket.className = 'mission-rocket';
+        rocket.setAttribute('aria-hidden', 'true');
+        rocket.innerHTML = '<i class="fas fa-rocket"></i>';
+        routeLine.appendChild(rocket);
+
         const yearMarkers = document.createElement('div');
         yearMarkers.className = 'year-markers';
 
-        // Calculate positions for year markers
         const totalYears = this.endYear - this.startYear;
         const yearsWithContent = [];
         for (let i = 0; i <= totalYears; i++) {
@@ -102,76 +118,101 @@ class ExperienceDial {
             }
         }
 
-        const angleIncrement = 360 / yearsWithContent.length;
-        const adjustedRadius = 170; // Slightly increased radius to prevent overlap
-
         yearsWithContent.forEach((year, index) => {
-            const marker = document.createElement('div');
+            const progress = yearsWithContent.length > 1 ? index / (yearsWithContent.length - 1) : 0;
+            const routePoint = this.getRoutePoint(progress);
+            const marker = document.createElement('button');
+            marker.type = 'button';
             marker.className = 'year-marker';
             marker.textContent = year;
-
-            // Calculate position (starting from top, moving clockwise)
-            const angle = (index * angleIncrement) - 90; // Start from top (-90 degrees)
-            const radian = angle * (Math.PI / 180);
-
-            // Calculate x and y positions from the center
-            const x = Math.cos(radian) * adjustedRadius;
-            const y = Math.sin(radian) * adjustedRadius;
-
-            // Position the marker
-            marker.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
             marker.dataset.year = year;
-            marker.dataset.angle = angle + 90; // Store the angle for rotation calculations
+            marker.dataset.index = index;
+            marker.style.left = `${routePoint.x / 10}%`;
+            marker.style.top = `${routePoint.y}px`;
+            marker.setAttribute('aria-expanded', 'false');
+            marker.setAttribute('aria-controls', 'experience-mission-card');
             yearMarkers.appendChild(marker);
         });
 
-        dialContainer.appendChild(yearMarkers);
+        route.appendChild(routeLine);
+        route.appendChild(yearMarkers);
 
-        // Create content container
         const contentContainer = document.createElement('div');
-        contentContainer.className = 'experience-content glass';
+        contentContainer.className = 'experience-content mission-card glass';
+        contentContainer.id = 'experience-mission-card';
+        contentContainer.setAttribute('aria-live', 'polite');
 
-        // Add containers to wrapper
-        contentWrapper.appendChild(dialContainer);
+        contentWrapper.appendChild(route);
         contentWrapper.appendChild(contentContainer);
-
-        // Add wrapper to timeline
         timeline.appendChild(contentWrapper);
 
-        // Store references
-        this.dial = dial;
+        this.contentWrapper = contentWrapper;
+        this.route = route;
+        this.yearsWithContent = yearsWithContent;
+        this.routeProgress = routeProgress;
+        this.rocket = rocket;
         this.yearMarkers = yearMarkers;
         this.contentContainer = contentContainer;
     }
 
     setupEventListeners() {
-        if (!this.dial) return;
-
-        // Mouse events for dial
-        this.dial.addEventListener('mousedown', this.startDragging.bind(this));
-        document.addEventListener('mousemove', this.handleDrag.bind(this));
-        document.addEventListener('mouseup', this.stopDragging.bind(this));
-
-        // Touch events for dial
-        this.dial.addEventListener('touchstart', this.startDragging.bind(this));
-        document.addEventListener('touchmove', this.handleDrag.bind(this));
-        document.addEventListener('touchend', this.stopDragging.bind(this));
-
-        // Click events for year markers
-        const markers = document.querySelectorAll('.year-marker');
+        const markers = this.yearMarkers?.querySelectorAll('.year-marker') || [];
         markers.forEach(marker => {
             marker.addEventListener('click', () => {
                 const year = parseInt(marker.dataset.year);
-                this.updateDial(year);
-            });
-            
-            // Add touch events for mobile
-            marker.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                const year = parseInt(marker.dataset.year);
-                this.updateDial(year);
+                if (marker.classList.contains('active') && !this.contentContainer.classList.contains('collapsed')) {
+                    marker.classList.remove('active');
+                    marker.setAttribute('aria-expanded', 'false');
+                    this.contentContainer.classList.add('collapsed');
+                    this.updateTimelineLayout(true);
+                    return;
+                }
+                this.travelToYear(year);
             });
         });
+    }
+
+    startAutoAdvance() {
+        const currentIndex = this.yearsWithContent.indexOf(this.currentYear);
+        const nextIndex = (currentIndex + 1) % this.yearsWithContent.length;
+        this.travelToYear(this.yearsWithContent[nextIndex]);
+    }
+
+    travelToYear(year) {
+        const targetIndex = this.yearsWithContent.indexOf(year);
+        if (targetIndex < 0) return;
+
+        window.cancelAnimationFrame(this.rocketAnimationFrame);
+        const targetProgress = this.yearsWithContent.length > 1
+            ? targetIndex / (this.yearsWithContent.length - 1)
+            : 0;
+        const startProgress = this.rocketProgress;
+        const startTime = performance.now();
+        const duration = 10000;
+
+        const animate = now => {
+            const elapsed = Math.min((now - startTime) / duration, 1);
+            const eased = elapsed < 0.5
+                ? 2 * elapsed * elapsed
+                : 1 - Math.pow(-2 * elapsed + 2, 2) / 2;
+            const progress = startProgress + ((targetProgress - startProgress) * eased);
+            const routePoint = this.getRoutePoint(progress);
+
+            this.rocketProgress = progress;
+            this.rocket.style.left = `${routePoint.x / 10}%`;
+            this.rocket.style.top = `${routePoint.y}px`;
+            this.routeProgress.style.strokeDashoffset = `${100 - (progress * 100)}`;
+
+            if (elapsed < 1) {
+                this.rocketAnimationFrame = window.requestAnimationFrame(animate);
+                return;
+            }
+
+            this.updateDial(year, false);
+            this.startAutoAdvance();
+        };
+
+        this.rocketAnimationFrame = window.requestAnimationFrame(animate);
     }
 
     startDragging(e) {
@@ -219,17 +260,71 @@ class ExperienceDial {
         this.isDragging = false;
     }
 
-    updateDial(year) {
-        const yearRange = this.endYear - this.startYear;
-        const yearProgress = (year - this.startYear) / yearRange;
-        const rotation = yearProgress * 360;
+    updateDial(year, positionRocket = true) {
+        const index = this.yearsWithContent.indexOf(year);
+        if (index < 0) return;
 
-        this.dial.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+        this.currentYear = year;
+
+        const progress = this.yearsWithContent.length > 1
+            ? (index / (this.yearsWithContent.length - 1)) * 100
+            : 0;
+
+        const routePoint = this.getRoutePoint(progress / 100);
+        this.rocketProgress = progress / 100;
+        if (positionRocket) {
+            this.routeProgress.style.strokeDashoffset = `${100 - progress}`;
+            this.rocket.style.left = `${routePoint.x / 10}%`;
+            this.rocket.style.top = `${routePoint.y}px`;
+        }
+        this.contentContainer.classList.remove('collapsed', 'mission-card-above', 'mission-card-below');
+        this.contentContainer.classList.add('mission-card-below');
+        this.contentContainer.style.setProperty('--mission-point', `${progress}%`);
         this.updateContent(year);
+        this.updateTimelineLayout(false);
 
-        // Update active marker
-        document.querySelectorAll('.year-marker').forEach(marker => {
-            marker.classList.toggle('active', parseInt(marker.dataset.year) === year);
+        this.yearMarkers.querySelectorAll('.year-marker').forEach(marker => {
+            const isActive = parseInt(marker.dataset.year) === year;
+            marker.classList.toggle('active', isActive);
+            marker.setAttribute('aria-expanded', String(isActive));
+        });
+    }
+
+    getRoutePoint(progress) {
+        if (!this.routePath || typeof this.routePath.getTotalLength !== 'function') {
+            return { x: progress * 1000, y: 40 };
+        }
+
+        const totalLength = this.routePath.getTotalLength();
+        const targetX = progress * 1000;
+        let low = 0;
+        let high = totalLength;
+
+        for (let i = 0; i < 18; i++) {
+            const midpoint = (low + high) / 2;
+            const point = this.routePath.getPointAtLength(midpoint);
+            if (point.x < targetX) low = midpoint;
+            else high = midpoint;
+        }
+
+        const point = this.routePath.getPointAtLength((low + high) / 2);
+        return { x: point.x, y: point.y };
+    }
+
+    updateTimelineLayout(collapsed) {
+        if (!this.contentWrapper || !this.route || window.matchMedia('(max-width: 768px)').matches) return;
+
+        if (collapsed) {
+            this.contentWrapper.style.height = '320px';
+            this.contentWrapper.classList.remove('timeline-card-above', 'timeline-card-below');
+            return;
+        }
+
+        requestAnimationFrame(() => {
+            const cardHeight = this.contentContainer.scrollHeight;
+            this.contentWrapper.style.height = `${cardHeight + 190}px`;
+            this.contentWrapper.classList.remove('timeline-card-above');
+            this.contentWrapper.classList.add('timeline-card-below');
         });
     }
 
@@ -378,16 +473,11 @@ class ExperienceDial {
     }
 }
 
-// Navbar scroll effect
+// Navbar scroll effect — toggle the .scrolled class; styling lives in CSS
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(238, 229, 218, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(238, 229, 218, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
+    if (!navbar) return;
+    navbar.classList.toggle('scrolled', window.scrollY > 100);
 });
 
 // Intersection Observer for animations
@@ -1199,4 +1289,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Cursor-tracking spotlight — updates --cursor-x / --cursor-y on hero and project cards
+(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
 
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.addEventListener('pointermove', (e) => {
+            const rect = hero.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            hero.style.setProperty('--cursor-x', `${x}%`);
+            hero.style.setProperty('--cursor-y', `${y}%`);
+        });
+    }
+
+    document.querySelectorAll('.project-card').forEach((card) => {
+        card.addEventListener('pointermove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--cursor-x', `${x}%`);
+            card.style.setProperty('--cursor-y', `${y}%`);
+        });
+    });
+})();
