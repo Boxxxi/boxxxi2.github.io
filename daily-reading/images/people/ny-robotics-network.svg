@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">New York Robotics community network</title>
+  <desc id="desc">A technical network graphic connecting robotics builders across New York and New Jersey.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07131d"/><stop offset="1" stop-color="#020507"/></linearGradient><linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7dd3fc"/><stop offset="1" stop-color="#6ee7b7"/></linearGradient></defs>
+  <rect width="1200" height="520" fill="url(#bg)"/>
+  <g fill="none" stroke="url(#line)" stroke-opacity=".5" stroke-width="3"><path d="M120 368C280 130 420 430 600 238S930 118 1080 324"/><path d="M125 158C350 340 490 85 704 300s300 50 385-142"/></g>
+  <g fill="#07131d" stroke="#7dd3fc" stroke-width="5"><circle cx="125" cy="158" r="18"/><circle cx="120" cy="368" r="18"/><circle cx="420" cy="270" r="22"/><circle cx="600" cy="238" r="28"/><circle cx="704" cy="300" r="19"/><circle cx="930" cy="168" r="20"/><circle cx="1080" cy="324" r="18"/></g>
+  <text x="600" y="218" text-anchor="middle" fill="#f2f8fb" font-family="Georgia,serif" font-size="72">NY Robotics</text>
+  <text x="600" y="350" text-anchor="middle" fill="#6ee7b7" font-family="ui-monospace,monospace" font-size="20" letter-spacing="6">FOUNDERS · BUILDERS · RESEARCHERS</text>
+</svg>
