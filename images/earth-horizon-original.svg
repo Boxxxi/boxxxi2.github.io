@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 520" role="img" aria-labelledby="title desc">
+  <title id="title">Earth horizon from orbit</title>
+  <desc id="desc">An original vector illustration of the blue Earth rising beneath dark space.</desc>
+  <defs>
+    <radialGradient id="ocean" cx="50%" cy="4%" r="76%">
+      <stop offset="0" stop-color="#58c8ec"/>
+      <stop offset="0.08" stop-color="#258fca"/>
+      <stop offset="0.32" stop-color="#125887"/>
+      <stop offset="0.66" stop-color="#082745"/>
+      <stop offset="1" stop-color="#020914"/>
+    </radialGradient>
+    <linearGradient id="atmosphere" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1a6fa9" stop-opacity=".15"/>
+      <stop offset=".16" stop-color="#4dd7ff" stop-opacity=".8"/>
+      <stop offset=".5" stop-color="#c5f7ff"/>
+      <stop offset=".82" stop-color="#54d9ff" stop-opacity=".88"/>
+      <stop offset="1" stop-color="#2487c4" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="daylight" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8adfff" stop-opacity="0"/>
+      <stop offset=".62" stop-color="#d8fbff" stop-opacity=".1"/>
+      <stop offset="1" stop-color="#fff8d9" stop-opacity=".7"/>
+    </linearGradient>
+    <filter id="atmoGlow" x="-20%" y="-200%" width="140%" height="500%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="softCloud" x="-20%" y="-30%" width="140%" height="160%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="sunGlow" x="-250%" y="-250%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <clipPath id="earthClip">
+      <ellipse cx="720" cy="900" rx="900" ry="610"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="720" cy="900" rx="905" ry="615" fill="none" stroke="#5cdcff" stroke-width="18" opacity=".5" filter="url(#atmoGlow)"/>
+  <ellipse cx="720" cy="900" rx="902" ry="612" fill="none" stroke="url(#atmosphere)" stroke-width="5"/>
+  <ellipse cx="720" cy="900" rx="900" ry="610" fill="url(#ocean)"/>
+
+  <g clip-path="url(#earthClip)">
+    <rect y="278" width="1440" height="242" fill="url(#daylight)"/>
+
+    <g fill="none" stroke="#e8fbff" stroke-linecap="round" filter="url(#softCloud)">
+      <path d="M-90 397 C120 320 272 367 432 338 S760 326 914 367 S1212 344 1510 292" stroke-width="24" opacity=".34"/>
+      <path d="M-55 455 C156 377 298 437 475 397 S779 392 952 430 S1259 404 1492 351" stroke-width="16" opacity=".24"/>
+      <path d="M194 490 C302 445 402 464 503 436 S712 433 828 466" stroke-width="11" opacity=".2"/>
+      <path d="M887 348 C1030 311 1132 332 1241 306 S1410 286 1515 301" stroke-width="10" opacity=".3"/>
+    </g>
+
+    <g fill="#d9f7ed" opacity=".12">
+      <path d="M209 444 C252 397 324 374 390 387 C437 397 468 430 452 463 C422 491 357 491 311 476 C267 466 236 465 209 444Z"/>
+      <path d="M937 411 C983 375 1051 367 1107 385 C1150 399 1173 426 1151 451 C1116 470 1060 457 1018 449 C981 441 956 437 937 411Z"/>
+    </g>
+
+    <ellipse cx="720" cy="858" rx="892" ry="600" fill="none" stroke="#fff" stroke-width="2" opacity=".24"/>
+    <rect width="1440" height="520" fill="url(#daylight)" opacity=".38"/>
+  </g>
+</svg>
