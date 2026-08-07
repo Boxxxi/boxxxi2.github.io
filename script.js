@@ -68,7 +68,9 @@ class ExperienceDial {
     init() {
         this.createDialStructure();
         this.setupEventListeners();
+        this.stabilizeTimelineHeight();
         this.updateDial(this.currentYear);
+        this.setupStableHeightListeners();
         this.startAutoAdvance();
     }
 
@@ -170,6 +172,41 @@ class ExperienceDial {
                 this.travelToYear(year);
             });
         });
+    }
+
+    setupStableHeightListeners() {
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            window.clearTimeout(resizeTimer);
+            resizeTimer = window.setTimeout(() => this.stabilizeTimelineHeight(), 160);
+        });
+
+        if (document.fonts?.ready) {
+            document.fonts.ready.then(() => this.stabilizeTimelineHeight());
+        }
+    }
+
+    stabilizeTimelineHeight() {
+        if (!this.contentContainer || !this.contentWrapper) return;
+
+        const activeYear = this.currentYear;
+        const liveSetting = this.contentContainer.getAttribute('aria-live');
+        this.contentContainer.setAttribute('aria-live', 'off');
+        this.contentContainer.style.visibility = 'hidden';
+        this.contentContainer.style.minHeight = '0px';
+
+        let maxCardHeight = 0;
+        this.yearsWithContent.forEach(year => {
+            this.updateContent(year);
+            maxCardHeight = Math.max(maxCardHeight, this.contentContainer.scrollHeight);
+        });
+
+        this.maxCardHeight = Math.ceil(maxCardHeight);
+        this.updateContent(activeYear);
+        this.contentContainer.style.removeProperty('min-height');
+        this.contentContainer.style.removeProperty('visibility');
+        this.contentContainer.setAttribute('aria-live', liveSetting || 'polite');
+        this.updateTimelineLayout(this.contentContainer.classList.contains('collapsed'));
     }
 
     startAutoAdvance() {
@@ -312,16 +349,25 @@ class ExperienceDial {
     }
 
     updateTimelineLayout(collapsed) {
-        if (!this.contentWrapper || !this.route || window.matchMedia('(max-width: 768px)').matches) return;
+        if (!this.contentWrapper || !this.route) return;
+
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            this.contentWrapper.style.removeProperty('height');
+            const routeHeight = this.route.getBoundingClientRect().height;
+            this.contentWrapper.style.minHeight = `${Math.ceil(routeHeight + this.maxCardHeight + 24)}px`;
+            return;
+        }
+
+        this.contentWrapper.style.removeProperty('min-height');
 
         if (collapsed) {
-            this.contentWrapper.style.height = '320px';
+            this.contentWrapper.style.height = `${(this.maxCardHeight || 130) + 190}px`;
             this.contentWrapper.classList.remove('timeline-card-above', 'timeline-card-below');
             return;
         }
 
         requestAnimationFrame(() => {
-            const cardHeight = this.contentContainer.scrollHeight;
+            const cardHeight = this.maxCardHeight || this.contentContainer.scrollHeight;
             this.contentWrapper.style.height = `${cardHeight + 190}px`;
             this.contentWrapper.classList.remove('timeline-card-above');
             this.contentWrapper.classList.add('timeline-card-below');
