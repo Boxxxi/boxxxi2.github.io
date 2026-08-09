@@ -103,11 +103,12 @@
 
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const monthTokens = monthNames.map(month => month.slice(0, 3).toUpperCase());
-  const editionText = document.querySelector(".masthead .overline")?.textContent || "";
-  const editionMatch = editionText.match(/(JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER)\s+(\d{1,2}),\s+(\d{4})/i);
-  const editionMonth = Math.max(0, monthNames.findIndex(month => month.toUpperCase() === editionMatch?.[1]?.toUpperCase()));
-  const editionDay = Number(editionMatch?.[2] || 1);
-  const editionYear = Number(editionMatch?.[3] || new Date().getFullYear());
+  const newYorkParts = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York", year: "numeric", month: "long", day: "numeric",
+  }).formatToParts(new Date()).filter(part => part.type !== "literal").map(part => [part.type, part.value]));
+  const editionMonth = monthNames.indexOf(newYorkParts.month);
+  const editionDay = Number(newYorkParts.day);
+  const editionYear = Number(newYorkParts.year);
   const editionDate = new Date(editionYear, editionMonth, editionDay);
   const typeRules = [
     ["tech", /robot|hardware|workshop|technology|cnc|solder/i],
