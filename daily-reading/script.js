@@ -180,16 +180,15 @@
   header.className = "calendar-toolbar";
   const monthControl = document.createElement("div");
   monthControl.className = "calendar-month-control";
-  monthControl.innerHTML = '<span>MONTH VIEW</span><div><button type="button" class="calendar-prev" aria-label="Previous month">←</button><strong></strong><button type="button" class="calendar-next" aria-label="Next month">→</button></div>';
+  monthControl.innerHTML = '<span>ROLLING TWO-MONTH VIEW</span><div><button type="button" class="calendar-prev" aria-label="Previous month">←</button><strong></strong><button type="button" class="calendar-next" aria-label="Next month">→</button></div>';
   const legend = document.createElement("div");
   legend.className = "calendar-legend";
   legend.setAttribute("aria-label", "Event type legend");
   legend.innerHTML = Object.entries(typeLabels).filter(([type]) => events.some(event => event.type === type)).map(([type, label]) => `<span class="calendar-key ${type}"><i></i>${label}</span>`).join("");
   header.append(monthControl, legend);
 
-  const calendar = document.createElement("div");
-  calendar.className = "calendar-month";
-  calendar.setAttribute("role", "grid");
+  const calendarPair = document.createElement("div");
+  calendarPair.className = "calendar-pair";
   const dialog = document.createElement("dialog");
   dialog.className = "calendar-detail";
   dialog.innerHTML = '<button type="button" class="calendar-detail-close" aria-label="Close event details">×</button><p class="calendar-detail-type"></p><h3></h3><p class="calendar-detail-date"></p><p class="calendar-detail-copy"></p><p class="calendar-detail-meta"></p><a target="_blank" rel="noreferrer">Open official source ↗</a>';
@@ -208,17 +207,22 @@
     dialog.showModal();
   };
 
-  const latestEvent = events.reduce((latest, event) => event.date > latest ? event.date : latest, editionDate);
+  const minimumHorizon = new Date(editionYear, editionMonth, editionDay + 30);
+  const latestEvent = events.reduce((latest, event) => event.date > latest ? event.date : latest, minimumHorizon);
   let viewDate = new Date(editionYear, editionMonth, 1);
-  const renderMonth = () => {
-    const viewYear = viewDate.getFullYear();
-    const viewMonth = viewDate.getMonth();
+  const renderCalendarMonth = (monthDate) => {
+    const viewYear = monthDate.getFullYear();
+    const viewMonth = monthDate.getMonth();
     const viewMonthToken = monthTokens[viewMonth];
-    monthControl.querySelector("strong").textContent = `${monthNames[viewMonth]} ${viewYear}`;
-    monthControl.querySelector(".calendar-prev").disabled = viewYear === editionYear && viewMonth === editionMonth;
-    monthControl.querySelector(".calendar-next").disabled = viewYear === latestEvent.getFullYear() && viewMonth === latestEvent.getMonth();
+    const panel = document.createElement("section");
+    panel.className = "calendar-panel";
+    const title = document.createElement("h3");
+    title.textContent = `${monthNames[viewMonth]} ${viewYear}`;
+    const calendar = document.createElement("div");
+    calendar.className = "calendar-month";
+    calendar.setAttribute("role", "grid");
     calendar.setAttribute("aria-label", `${monthNames[viewMonth]} ${viewYear} event calendar`);
-    calendar.replaceChildren();
+    panel.append(title, calendar);
     ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].forEach((day) => {
       const label = document.createElement("div");
       label.className = "calendar-weekday";
@@ -252,17 +256,25 @@
       });
       calendar.append(cell);
     }
+    return panel;
+  };
+  const renderMonth = () => {
+    const secondMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1);
+    monthControl.querySelector("strong").textContent = `${monthNames[viewDate.getMonth()]} + ${monthNames[secondMonth.getMonth()]}`;
+    monthControl.querySelector(".calendar-prev").disabled = viewDate.getFullYear() === editionYear && viewDate.getMonth() === editionMonth;
+    monthControl.querySelector(".calendar-next").disabled = secondMonth >= new Date(latestEvent.getFullYear(), latestEvent.getMonth(), 1);
+    calendarPair.replaceChildren(renderCalendarMonth(viewDate), renderCalendarMonth(secondMonth));
   };
   monthControl.querySelector(".calendar-prev").addEventListener("click", () => { viewDate.setMonth(viewDate.getMonth() - 1); renderMonth(); });
   monthControl.querySelector(".calendar-next").addEventListener("click", () => { viewDate.setMonth(viewDate.getMonth() + 1); renderMonth(); });
   renderMonth();
 
   grid.classList.add("event-calendar");
-  grid.replaceChildren(header, calendar);
+  grid.replaceChildren(header, calendarPair);
   document.querySelector(".festival-section .section-heading h2").textContent = "Signal calendar";
   document.querySelector(".festival-section .section-heading .overline").textContent = "03 / WHAT'S NEXT";
   const sourceNote = document.querySelector(".festival-section .source-note");
-  if (sourceNote) sourceNote.textContent = "Events, deadlines and releases share one calendar. Select any signal for complete details, then verify the official source before making plans.";
+  if (sourceNote) sourceNote.textContent = "Events, deadlines and releases share a rolling two-month calendar covering at least the next 30 days. Select any signal for complete details, then verify the official source before making plans.";
   document.querySelector(".festival-section .month-filters")?.remove();
   document.querySelector(".hackathon-section")?.remove();
   document.querySelector(".release-section")?.remove();
