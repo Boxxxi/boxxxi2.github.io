@@ -288,71 +288,8 @@
 // <img class="story-image"> directly or put its URL in data-image on story-art.
 // Invalid, blocked, or unavailable images fall back to the existing category art.
 (() => {
-  const currentStoryMedia = [
-    {
-      image: "images/stories/gemini-robotics-demo.jpg",
-      alt: "Gemini Robotics 2 multi-robot collaboration demonstration",
-      video: "https://www.youtube-nocookie.com/embed/fo9WirRIaVs?autoplay=1&rel=0",
-      videoTitle: "Gemini Robotics 2 official demonstration",
-    },
-    {
-      image: "images/stories/robostral-demo.jpg",
-      alt: "Robostral following a navigation instruction using its single-camera point of view",
-    },
-    {
-      image: "images/stories/lerobot-vla-architecture.jpg",
-      alt: "LeRobot vision-language-action model architecture diagram",
-      fit: "contain",
-    },
-    {
-      image: "images/stories/ultra-robotics-demo.jpg",
-      alt: "Ultra Robotics humanoid working alongside Industry City logistics staff",
-      video: "https://www.youtube-nocookie.com/embed/I44_zbEwz_w?autoplay=1&rel=0",
-      videoTitle: "Ultra Robotics official demonstration",
-    },
-    {
-      image: "images/stories/gpt-56-eval.svg",
-      alt: "GPT-5.6 benchmark signal audit showing roughly thirty percent broken tasks",
-      fit: "dark-contain",
-    },
-    {
-      image: "images/stories/kimi-k3.png",
-      alt: "Kimi K3 open-weight model repository overview",
-      fit: "dark-contain",
-    },
-    {
-      image: "images/stories/eu-ai-lifecycle.jpg",
-      alt: "European Commission diagram of the artificial intelligence lifecycle",
-      fit: "contain",
-    },
-    {
-      image: "images/stories/blade-runner-2099-optimized.jpg",
-      alt: "Blade Runner 2099 official series artwork",
-      video: "https://www.youtube-nocookie.com/embed/0Dr8I_RyRCg?autoplay=1&rel=0",
-      videoTitle: "Blade Runner 2099 official trailer",
-    },
-    {
-      image: "images/stories/the-last-house.jpg",
-      alt: "The Last House official film still",
-      video: "https://www.youtube-nocookie.com/embed/3OqYqrHPQn8?autoplay=1&rel=0",
-      videoTitle: "The Last House official trailer",
-    },
-    {
-      image: "images/stories/ghost-in-the-shell.jpg",
-      alt: "Ghost in the Shell official anime artwork",
-      video: "https://www.youtube-nocookie.com/embed/b_v0-RWLo18?autoplay=1&rel=0",
-      videoTitle: "Ghost in the Shell official trailer",
-    },
-  ];
-
-  document.querySelectorAll(".story-art").forEach((art, index) => {
-    const media = currentStoryMedia[index];
-    if (!art.dataset.image && media) {
-      art.dataset.image = media.image;
-      art.dataset.imageAlt = media.alt;
-      if (media.fit === "contain") art.classList.add("technical-diagram");
-      if (media.fit === "dark-contain") art.classList.add("dark-diagram");
-    }
+  document.querySelectorAll(".story-art").forEach((art) => {
+    if (art.dataset.imageFit === "contain") art.classList.add("technical-diagram");
     let image = art.querySelector("img.story-image");
     const source = art.dataset.image;
 
@@ -367,31 +304,34 @@
       art.prepend(image);
     }
 
-    if (!image) return;
-    image.loading ||= "lazy";
-    image.decoding ||= "async";
-    const reveal = () => art.classList.add("has-image");
-    const fallback = () => {
-      art.classList.remove("has-image");
-      image.remove();
-    };
-    image.addEventListener("load", reveal, { once: true });
-    image.addEventListener("error", fallback, { once: true });
-    if (image.complete) image.naturalWidth > 0 ? reveal() : fallback();
+    if (image) {
+      image.loading ||= "lazy";
+      image.decoding ||= "async";
+      const reveal = () => art.classList.add("has-image");
+      const fallback = () => {
+        art.classList.remove("has-image");
+        image.remove();
+      };
+      image.addEventListener("load", reveal, { once: true });
+      image.addEventListener("error", fallback, { once: true });
+      if (image.complete) image.naturalWidth > 0 ? reveal() : fallback();
+    }
 
-    if (media?.video) {
+    const video = art.dataset.video;
+    const videoTitle = art.dataset.videoTitle;
+    if (video && videoTitle) {
       art.classList.add("has-video");
       const play = document.createElement("button");
       play.className = "story-video-trigger";
       play.type = "button";
-      play.setAttribute("aria-label", `Play ${media.videoTitle}`);
-      const playLabel = /trailer/i.test(media.videoTitle) ? "WATCH TRAILER" : "WATCH DEMO";
+      play.setAttribute("aria-label", `Play ${videoTitle}`);
+      const playLabel = /trailer/i.test(videoTitle) ? "WATCH TRAILER" : "WATCH DEMO";
       play.innerHTML = `<span aria-hidden="true">▶</span><b>${playLabel}</b>`;
       play.addEventListener("click", () => {
         const frame = document.createElement("iframe");
         frame.className = "story-video";
-        frame.src = media.video;
-        frame.title = media.videoTitle;
+        frame.src = video;
+        frame.title = videoTitle;
         frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
         frame.allowFullscreen = true;
         frame.referrerPolicy = "strict-origin-when-cross-origin";
