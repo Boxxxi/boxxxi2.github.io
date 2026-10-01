@@ -479,7 +479,7 @@ class ExperienceDial {
             2020: {
                 title: "Quant Analyst Intern",
                 company: "J.P. Morgan Services Pvt Ltd, Mumbai",
-                period: "May 2020 - July 2022",
+                period: "May 2020 - July 2020",
                 description: `<ul><li>Analyzed trades responsible for outlier risks, designing a ranking metric that reduced portfolio risk by 2%.</li><li>Validated & fixed discrepancies in automated risk reports, improving accuracy by 43%.</li></ul>`
             },
             2019: [
